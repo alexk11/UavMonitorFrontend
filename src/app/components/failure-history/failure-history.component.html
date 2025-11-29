@@ -1,0 +1,201 @@
+<h5 style="text-align: center; color: #A80000">Отказ от {{failureData.date}}, БВС: {{uavId}}</h5>
+<app-info-dialog
+  [message]="message"
+  [display]="dialogVisible"
+  (confirm)="onConfirm()">
+</app-info-dialog>
+<p *ngIf="allSteps.length == 0">Нет данных</p>
+<div *ngIf="allSteps.length > 0" class="card" style="border: none">
+  <p-table [value]="allSteps"
+           dataKey="id"
+           editMode="row"
+           showGridlines
+           stripedRows
+           [paginator]="true"
+           [rows]="10"
+           [rowsPerPageOptions]="[5, 10, 20]"
+           [showCurrentPageReport]="true"
+           currentPageReportTemplate="Показаны {first}-{last} из {totalRecords} записей"
+           [tableStyle]="{'min-width': '50rem'}">
+    <!--ng-template #caption>
+      <div-- class="flex">
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input
+            pInputText type="text"
+            (input)="applyFilter($event)"
+            (keyup)="applyFilter($event)"
+            placeholder="Поиск в таблице"/>
+        </p-iconfield>
+      </div>
+
+      let addedStep: UavFailureStep = {
+      id: -1, // will be assigned by DB
+      recordId: -1,
+      uavId: this.uavId,
+      failureId: -1,
+      date: '',
+      contactPerson: '',
+      importance: 'ИНФОРМАЦИЯ',
+      description: ''
+    };
+
+    </ng-template-->
+    <ng-template #header>
+      <tr>
+        <th style="width:4%">№</th>
+        <th style="width:26%; text-align:center">Дата</th>
+        <th style="width:10%; text-align:center">Уровень</th>
+        <th style="width:20%; text-align:center">Контакт</th>
+        <th style="width:30%; text-align:center">Описание</th>
+        <th style="width:5%; padding: 0">
+          <a (click)="onAdd()" title="Добавить запись об истории отказа" onmouseover="" style="cursor: pointer">
+            <i class="pi pi-plus-circle"
+               style="padding: 0.4em 0 0 0.8em">
+            </i>
+          </a>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-step let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="step">
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              {{step.id}}
+            </ng-template>
+            <ng-template #output>
+              {{step.id}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td style="text-align: center">
+          <p-cellEditor>
+            <ng-template #input>
+              <p-datePicker [(ngModel)]="step.date"
+                            required
+                            appendTo="body"
+                            dataType="string"
+                            dateFormat="dd.mm.yy">
+              </p-datePicker>
+            </ng-template>
+            <ng-template #output>
+              {{step.date}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td style="text-align: center">
+          <p-cellEditor>
+            <ng-template #input>
+              <p-select
+                [options]="level"
+                appendTo="body"
+                [(ngModel)]="step.importance"
+                [style]="{'width':'100%'}" />
+            </ng-template>
+            <ng-template #output>
+              <p-tag [value]="step.importance" [severity]="getImportance(step.importance)"/>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <input type="text" [(ngModel)]="step.contactPerson"/>
+            </ng-template>
+            <ng-template #output>
+              {{step.contactPerson}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <textarea rows="4" cols="50" [(ngModel)]="step.description" pTextarea></textarea>
+            </ng-template>
+            <ng-template #output>
+              {{step.description}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td style="padding: 0">
+          <div class="flex items-center justify-center gap-2">
+            <button
+              *ngIf="!editing"
+              pButton
+              pRipple
+              type="button"
+              title="Редактировать"
+              pInitEditableRow
+              icon="pi pi-pencil"
+              (click)="onRowEditInit(step)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              title="Сохранить изменения"
+              pSaveEditableRow
+              icon="pi pi-check"
+              (click)="onRowEditSave(step)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              title="Отменить изменения"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(step, ri)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              title="Удалить запись об отказе"
+              pCancelEditableRow
+              icon="pi pi-trash"
+              (click)="onRowEditRemove(step)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="allSteps.length == 0" class="btn-row">
+  <div class="text-right p-2" style="float: right">
+    <button class="btn btn-primary m-1"
+            type="button"
+            (click)="onAdd()"
+            title="Добавить запись об отказе">
+      Добавить
+    </button>
+  </div>
+</div>
+<div style="display: grid; margin-bottom: 1em">
+  <button class="btn btn-secondary m-2"
+          style="float: left; width: 8%"
+          type="button"
+          (click)="onBack()"
+          title="К списку отказов">
+    Назад
+  </button>
+</div>

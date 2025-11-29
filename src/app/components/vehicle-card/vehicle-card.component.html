@@ -1,0 +1,107 @@
+<div class="card" *ngIf="uavInfo">
+  <h4 style="text-align: center; color: #A80000">Карта БВС "{{uavInfo.uavId}}"</h4>
+  <app-info-dialog
+    [message]="message"
+    [display]="dialogVisible"
+    (confirm)="dialogVisible=false">
+  </app-info-dialog>
+  <p-tabs [(value)]="activeTab">
+    <p-tablist>
+      <p-tab value="0">Информация</p-tab>
+      <p-tab value="1">СЛГ</p-tab>
+      <p-tab value="2">Акт оценки</p-tab>
+      <p-tab value="3">ТО</p-tab>
+      <p-tab value="4">Страхование</p-tab>
+      <p-tab value="5">Фото</p-tab>
+      <p-tab value="6">Перечень отказов</p-tab>
+    </p-tablist>
+    <p-tabpanels class="mb-0" style="padding-bottom: 0; padding-right: 0">
+      <p-tabpanel value="0">
+        <div class="parent">
+          <div>
+            <span style="float: right">
+              <!--span style="padding-left: 1em"-->
+                <p-button *ngIf="isEditable"
+                          (click)="onRemoveRow()"
+                          title="Удалить информацию о БВС"
+                          class="pbt"
+                          [style]="{width: '2.5em', color: 'black', background: '#EEEEEE', 'border-color': '#EEEEEE'}">
+                  <i class="pi pi-minus-circle"></i>
+                </p-button>
+                <p-button *ngIf="isEditable"
+                          (click)="onAddRow()"
+                          title="Добавить информацию о БВС"
+                          class="pbt"
+                          [style]="{width: '2.5em', color: 'black', background: '#EEEEEE', 'border-color': '#EEEEEE'}">
+                  <i class="pi pi-plus-circle"></i>
+                </p-button>
+                <p-button (click)="onEdit()"
+                          title="Редактировать информацию о БВС"
+                          class="pbt"
+                          [style]="{width: '2.5em', color: 'black', background: '#EEEEEE', 'border-color': '#EEEEEE'}">
+                  <i class="pi pi-file-edit"></i>
+                </p-button>
+              <!--/span-->
+            </span>
+          </div>
+          <div class="uav-info" *ngIf="uavInfo" style="width: 70%">
+            <p *ngFor="let data of uavInfo.infoList" [contentEditable]="isEditable">
+              <li>{{data}}</li>
+            </p>
+          </div>
+          <div class="btn-row">
+            <div class="text-right mt-2" style="float: right">
+              <button class="btn btn-secondary"
+                      type="button"
+                      (click)="onReset()"
+                      title="Отменить изменения">
+                Отменить
+              </button>
+              <button class="btn btn-primary m-1"
+                      type="button"
+                      (click)="onSave()"
+                      title="Сохранить изменения">
+                Сохранить
+              </button>
+            </div>
+          </div>
+        </div>
+      </p-tabpanel>
+      <p-tabpanel value="1">
+        <!--ng-template pTemplate="content" => Lazy loading NOT working !! -->
+           <app-pdf-viewer [uav]="uavInfo" [docType]="'Slg'"/>
+        <!--/ng-template-->
+      </p-tabpanel>
+      <p-tabpanel value="2">
+        <!--ng-template pTemplate="content"-->
+           <app-pdf-viewer [uav]="uavInfo" [docType]="'EvalAct'"/>
+        <!--/ng-template-->
+      </p-tabpanel>
+      <p-tabpanel value="3">
+        <!--ng-template pTemplate="content"-->
+          <app-vehicle-to [uav]="uavInfo"/>
+        <!--/ng-template-->
+      </p-tabpanel>
+      <p-tabpanel value="4">
+        <app-pdf-viewer [uav]="uavInfo" [docType]="'Insurance'"/>
+      </p-tabpanel>
+      <p-tabpanel value="5">
+        <p class="m-0">
+          <app-image-gallery [uav]="uavInfo"/>
+        </p>
+      </p-tabpanel>
+      <p-tabpanel value="6">
+        <app-vehicle-failure [uav]="uavInfo"/>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>
+<div style="display: grid; margin-bottom: 2em">
+  <button class="btn btn-secondary m-1"
+      style="float: left; width: 8%"
+      type="button"
+      (click)="onBack()"
+      title="К списку БВС">
+    Назад
+  </button>
+</div>

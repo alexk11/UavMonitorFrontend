@@ -1,0 +1,14 @@
+<p-dialog [header]="'Сообщение'"
+          [(visible)]="display"
+          [modal]="true"
+          [style]="{ width: '25rem' }">
+  <!--ng-content>{{message}}</ng-content-->
+  <p>{{message}}</p>
+  <!--p-footer *ngIf="showFooter"-->
+  <div class="flex justify-end gap-2">
+    <!--button pButton type="button" pButtonLabel="Cancel" (click)="onCancel()"></button>
+    <button pButton type="button" pButtonLabel="Confirm" (click)="onConfirm()"></button-->
+    <!--p-button class="d-btn" label="Cancel" severity="secondary" (click)="onCancel()" /-->
+    <p-button class="d-btn" label="Ok" (click)="onConfirm()" />
+  </div>
+</p-dialog>

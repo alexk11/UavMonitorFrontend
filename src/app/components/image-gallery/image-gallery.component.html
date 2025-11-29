@@ -1,0 +1,37 @@
+<div class="parent">
+  <div class="div1">
+    <!--img [src]="imgSrc" alt="Alt Text"/-->
+    <p-galleria *ngIf="images.length > 0"
+                [value]="images"
+                [(activeIndex)]="currentImageIndex"
+                [showThumbnails]="false"
+                [showIndicators]="true"
+                [numVisible]="5">
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.imageSrc" [alt]="item.alt" class="gallery-image"/>
+      </ng-template>
+    </p-galleria>
+  </div>
+  <div class="btn-row mt-2">
+    <div class="text-right mt-2" style="float: right">
+      <button class="btn btn-secondary m-1"
+              [disabled]="images.length == 0"
+              type="button"
+              (click)="onRemove()"
+              title="Удалить изображение">
+        Удалить
+      </button>
+      <input #uploadFile
+             type="file"
+             (change)="onFileSelected($event)"
+             hidden="hidden"
+             accept="application/image"/>
+      <button class="btn btn-primary"
+              type="button"
+              (click)="uploadFile.click()"
+              title="Загрузить новое изображение">
+        Загрузить
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<!--theme-toggle /-->
+<div class="grid-container">
+  <app-info-dialog
+    [message]="message"
+    [display]="dialogVisible"
+    (confirm)="dialogVisible=false">
+  </app-info-dialog>
+  <h3 style="text-align: right; color: #A80000">Список БВС</h3>
+  <div class="mb-2">
+    <button style="float: right"
+            title="Удалить выбранные БВС"
+            (click)="onDelete()"
+            [disabled]="selectedVehicles.length == 0">
+      Удалить
+    </button>
+    <button style="float: right; margin-right: 5px"
+            title="Добавить новый БВС"
+            (click)="addVehicle()">
+      Добавить
+    </button>
+  </div>
+</div>
+<div class="card">
+  <p-table
+      [columns]="cols"
+      [value]="displayedVehicles"
+      showGridlines
+      stripedRows
+      [paginator]="true"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [rows]="10"
+      [first]="first"
+      [(selection)]="selectedVehicles"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      currentPageReportTemplate="Показаны {first}-{last} из {totalRecords} записей"
+      (onPage)="pageChange($event)"
+  >
+    <ng-template #caption>
+      <div class="flex">
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input
+            pInputText type="text"
+            (input)="applyFilter($event)"
+            (keyup)="applyFilter($event)"
+            placeholder="Поиск в таблице" />
+        </p-iconfield>
+      </div>
+    </ng-template>
+    <ng-template #header let-columns>
+      <tr>
+        <th pSortableColumn="id" style="width:15%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(0)?.header }}
+          </div>
+        </th>
+        <th pSortableColumn="type" style="width:20%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(1)?.header }}
+            <p-sortIcon field="type" />
+          </div>
+        </th>
+        <th pSortableColumn="vehicleId" style="width:20%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(2)?.header }}
+            <p-sortIcon field="vehicleId" />
+          </div>
+        </th>
+        <th pSortableColumn="description" style="width:25%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(3)?.header }}
+            <p-sortIcon field="description" />
+          </div>
+        </th>
+        <th style="width:4%">
+          <div style="margin-left:0.5em">#</div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-rowData let-columns="columns">
+      <tr (dblclick)="onUavRowDoubleClick(rowData)">
+        <td *ngFor="let col of columns">
+          {{ rowData[col.field] }}
+        </td>
+        <td>
+          <p-tableCheckbox [value]="rowData" style="margin-left:0.2em"/>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<span>* Нажмите 2 раза на строку в таблице для просмотра/редактирования профиля БВС</span>

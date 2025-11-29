@@ -1,0 +1,65 @@
+<div class="card m-2">
+  <app-info-dialog
+    [message]="message"
+    [display]="dialogVisible"
+    (confirm)="onConfirm()">
+  </app-info-dialog>
+  <h5 class="card-header fw-bolder" style="color: slategray; font-size: medium">Регистрация нового БВС</h5>
+  <div class="card-body">
+    <form [formGroup]="uavCreateForm" (ngSubmit)="onSubmit()">
+      <div class="form-row mb-3">
+        <div class="form-group col-5">
+          <label>Тип</label>
+          <p-select [options]="types"
+                    formControlName="type"
+                    placeholder="Выберите тип БВС"
+                    optionLabel="name"
+                    class="form-control type-select"
+                    [ngClass]="{ 'is-invalid': submitted && f.type.errors}">
+          </p-select>
+          <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+            <div *ngIf="f.type.errors.required">{{ required }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-5 pb-3">
+        <label>Идентификатор</label>
+        <input type="text"
+          formControlName="vehicleId"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.vehicleId.errors }"
+        />
+        <div *ngIf="submitted && f.vehicleId.errors" class="invalid-feedback">
+          <div *ngIf="f.vehicleId.errors.required">{{ required }}</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <span>Описание</span>
+        <div class="form-group col-5">
+          <textarea rows="5" cols="40"
+                    pTextarea
+                    formControlName="description"
+                    class="form-control">
+          </textarea>
+        </div>
+      </div>
+      <div class="text-right mt-2" style="float: right; margin-right: 0.5rem">
+        <button class="btn btn-secondary m-1" type="reset" (click)="onReset()" title="Очистить">
+          Отменить
+        </button>
+        <button class="btn btn-primary m-1" type="submit" title="Добавить описание БВС">
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="display: grid; margin-bottom: 1em">
+  <button class="btn btn-secondary m-1"
+          style="float: left; width: 8%"
+          type="button"
+          (click)="onBack()"
+          title="К списку БВС">
+    Назад
+  </button>
+</div>

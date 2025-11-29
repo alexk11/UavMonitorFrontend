@@ -1,0 +1,41 @@
+.card {
+  border: lightgray solid 1px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.pbt {
+  padding-right: 0.15em;
+}
+
+.d-btn {
+  float: right;
+  padding-right: 10px;
+}
+
+h4 {
+  border-bottom-style: double;
+  border-bottom-color: lightgray;
+  padding-bottom: 0.2em;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr) fit-content(20%);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  padding: 2px;
+}
+
+.uav-info {
+  grid-row-start: 2;
+}
+
+.btn-row {
+  grid-row-start: 3;
+}

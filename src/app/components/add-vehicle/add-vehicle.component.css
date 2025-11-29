@@ -1,0 +1,12 @@
+p {
+  font-family: Lato, serif;
+}
+
+.type-select {
+  padding: 0 !important;
+}
+
+.d-btn {
+  float: right;
+  padding-right: 10px;
+}

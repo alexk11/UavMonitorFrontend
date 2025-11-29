@@ -1,0 +1,25 @@
+.p-select {
+  padding: 0;
+}
+
+.h5, h5 {
+  font-size: 1.0rem;
+  color: dimgrey;
+}
+
+div.form-group > label {
+  font-weight: bolder;
+  font-size: smaller;
+}
+
+.d-btn {
+  float: right;
+  padding-right: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  padding-right: 12em;
+}

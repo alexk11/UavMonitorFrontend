@@ -2,18 +2,26 @@
 <p *ngIf="allTOs.length == 0">Нет данных</p>
 <div *ngIf="allTOs.length > 0" class="card" style="border: none">
   <div class="parent p-1 mb-2">
-    <div style="text-align: right">
-      <!--span class="pb-2">{{getDaysBeforeTO()}}</span-->
+    <div *ngIf="progressbarInterval > 0" class="to-status-container">
+      <div class="days-display" [ngClass]="getSeverityClass()">
+        <div class="days-number">{{ progressbarInterval }}</div>
+        <div class="days-label">{{ getDaysBeforeTO() }}</div>
+      </div>
+      <div class="progress-container">
+        <p-progressBar
+          [value]="getProgressPercentage()"
+          [showValue]="false"
+          [style]="{'height': '30px', 'border-radius': '8px'}"
+          [pTooltip]="getDaysBeforeTO()"
+          tooltipPosition="top">
+        </p-progressBar>
+        <div class="progress-bar-custom" [style.width.%]="getProgressPercentage()" [style.background-color]="getBarColor()"></div>
+      </div>
     </div>
-    <div *ngIf="progressbarInterval > 0" class="pt-3 pb-3">
-      <span class="pb-2" style="margin-left: 5.0rem">{{getDaysBeforeTO()}}</span>
-      <p-progressBar [value]="progressbarInterval"
-                     [style]="{'background-color': getBarColor(), 'border-width': 0}"
-                     [pTooltip]="getDaysBeforeTO()">
-        <ng-template #content let-value>
-          <span style="color: black; font-weight: bolder; font-size: larger">{{value}}</span>
-        </ng-template>
-      </p-progressBar>
+    <div *ngIf="progressbarInterval <= 0" class="to-status-container">
+      <div class="days-display status-overdue">
+        <div class="days-label">ТО просрочено или нет данных</div>
+      </div>
     </div>
   </div>
   <p-table [value]="allTOs"

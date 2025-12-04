@@ -1,89 +1,226 @@
-/*@import "primeng/resources/primeng.css";
-@import "primeflex/primeflex.scss";
-*/
+/* Базовые переменные для светлой темы (по умолчанию) */
+:root {
+  /* Основные цвета */
+  --primary-red: #c12727;
+  --primary-dark: #030509;
+  --secondary-dark: #313b4a;
+  --gray-dark: #41454a;
+  --success-green: #4CAF50;
 
-/* Global Styles */
+  /* Фон */
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+
+  /* Текст */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-inverse: #ffffff;
+
+  /* Границы */
+  --border-color: #e0e0e0;
+  --border-light: #f0f0f0;
+
+  /* Ховер эффекты */
+  --hover-light: rgba(193, 39, 39, 0.1);
+  --hover-dark: rgba(0, 0, 0, 0.05);
+
+  /* Тени */
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Состояния */
+  --disabled-bg: #cccccc;
+  --disabled-text: #888888;
+}
+
+/* Темная тема для CSS переменных */
+[data-theme="dark"] {
+  /* Основные цвета (остаются теми же для акцентов) */
+  --primary-red: #ff5252;
+  --primary-dark: #1a1a1a;
+  --secondary-dark: #2d3748;
+  --gray-dark: #718096;
+  --success-green: #68d391;
+
+  /* Фон */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-card: #2d2d2d;
+
+  /* Текст */
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-inverse: #121212;
+
+  /* Границы */
+  --border-color: #404040;
+  --border-light: #505050;
+
+  /* Ховер эффекты */
+  --hover-light: rgba(255, 82, 82, 0.15);
+  --hover-dark: rgba(255, 255, 255, 0.05);
+
+  /* Тени */
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  /* Состояния */
+  --disabled-bg: #555555;
+  --disabled-text: #777777;
+}
+
+/* Базовые стили */
 * {
-  font-family: Arial, Helvetica, sans-serif;
-}
-h1 {
-  color: #264D73;
-  font-size: 2.5rem;
-}
-h2, h3 {
-  color: #444;
-  font-weight: lighter;
-}
-h3 {
-  font-size: 1.3rem;
-}
-body {
-  padding: .5rem;
-  max-width: 1000px;
-  margin: auto;
-}
-@media (min-width: 600px) {
-  body {
-    padding: 2rem;
-  }
-}
-body, input[text] {
-  color: #333;
-  font-family: Cambria, Georgia, serif;
-}
-a {
-  cursor: pointer;
-}
-button {
-  background-color: #eee;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  color: black;
-  font-size: 1.2rem;
-  padding: 1rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-}
-button:hover {
-  background-color: black;
-  color: white;
-}
-button:disabled {
-  background-color: #eee;
-  color: #aaa;
-  cursor: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-/* Navigation link styles */
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-right: 10px;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #e8e8e8;
-  color: #3d3d3d;
-  border-radius: 4px;
-}
-
-nav a:hover {
-  color: white;
-  background-color:  #42545C;
-}
-nav a.active {
-  background-color: black;
-  color: white;
-}
-hr {
-  margin: 1.5rem 0;
-}
-input[type="text"] {
-  box-sizing: border-box;
+html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  padding: .5rem;
+  height: 100%;
+  overflow-x: hidden;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Применяем PrimeNG тему для body */
+body.dark-theme {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+app-root {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Общие стили для кнопок */
+button {
+  background-color: var(--primary-dark);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-inverse);
+  font-size: 1rem;
+  padding: 12px 24px;
+  margin: 8px 4px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: var(--shadow-light);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--primary-red);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Переопределение стилей PrimeNG для темной темы */
+.dark-theme .p-component,
+.dark-theme .p-inputtext,
+.dark-theme .p-dropdown,
+.dark-theme .p-calendar,
+.dark-theme .p-button {
+  transition: all 0.3s ease;
+}
+
+/* Дополнительные стили для консистентности */
+body.dark-theme .card {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+/* prime-ng-overrides.css - создать отдельный файл или добавить в styles.css */
+
+/* Таблицы в темной теме */
+body.dark-theme .p-datatable {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+body.dark-theme .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--secondary-dark);
+  color: var(--text-inverse);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .p-datatable .p-datatable-tbody > tr > td {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--hover-light);
+}
+
+/* Кнопки в темной теме */
+body.dark-theme .p-button {
+  transition: all 0.3s ease;
+}
+
+/* Диалоги в темной теме */
+body.dark-theme .p-dialog {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+body.dark-theme .p-dialog .p-dialog-header {
+  background-color: var(--secondary-dark);
+  color: var(--text-inverse);
+}
+
+/* Меню в темной теме */
+body.dark-theme .p-menu {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .p-menu .p-menuitem-link {
+  color: var(--text-primary);
+}
+
+body.dark-theme .p-menu .p-menuitem-link:hover {
+  background-color: var(--hover-light);
+}
+
+/* Поля ввода в темной теме */
+body.dark-theme .p-inputtext {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .p-inputtext:enabled:hover {
+  border-color: var(--primary-red);
+}
+
+body.dark-theme .p-inputtext:enabled:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.2rem rgba(255, 82, 82, 0.25);
+}

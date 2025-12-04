@@ -1,4 +1,39 @@
-.d-btn {
-  float: right;
-  padding-right: 10px;
+/* Стили для диалогового окна подтверждения */
+::ng-deep .p-dialog {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+  background-color: #313b4a;
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 12px 12px 0 0;
+  padding: 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 30px;
+  font-size: 1.1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  border-top: 1px solid #dee2e6;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+::ng-deep .p-button {
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 500;
+}
+
+::ng-deep .p-button.p-button-text {
+  color: #666;
+}
+
+::ng-deep .p-button.p-button-text:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }

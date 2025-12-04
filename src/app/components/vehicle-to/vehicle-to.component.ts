@@ -164,21 +164,30 @@ export class VehicleToComponent implements OnInit {
     this.allTOs = {... this.shallow };
   }
 
+  getProgressPercentage(): number {
+    // Calculate percentage based on 365 days max
+    // Inverted: 0 days = 100%, 365+ days = 0%
+    const maxDays = 365;
+    if (this.progressbarInterval <= 0) return 100;
+    if (this.progressbarInterval >= maxDays) return 0;
+    return Math.round(((maxDays - this.progressbarInterval) / maxDays) * 100);
+  }
+
   getBarColor(): string {
     if (this.progressbarInterval < 30) {
-      return '#A80000';
-    } else if (this.progressbarInterval > 30 && this.progressbarInterval < 90) {
-      return '#FF7F50';
-    } else if (this.progressbarInterval > 90 && this.progressbarInterval < 180) {
-      return '#F0E68C';
+      return '#dc3545'; // Red
+    } else if (this.progressbarInterval >= 30 && this.progressbarInterval < 90) {
+      return '#fd7e14'; // Orange
+    } else if (this.progressbarInterval >= 90 && this.progressbarInterval < 180) {
+      return '#ffc107'; // Yellow
     }
-    return '#7CFC00';
+    return '#28a745'; // Green
   }
 
   getDaysBeforeTO(): string {
-    let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
+    let msg = `${this.progressbarInterval}`;
     let lastDigit = Math.abs(this.progressbarInterval % 10);
-    if(lastDigit == 1) {
+    if(lastDigit == 1 && this.progressbarInterval !== 11) {
       msg += ' день';
     } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
       msg += ' дней';
@@ -187,24 +196,20 @@ export class VehicleToComponent implements OnInit {
     } else {
       msg += ' дней';
     }
-    return msg;
+    return msg + ' до ближайшего ТО';
   }
 
-  isRed(): boolean {
-    return this.progressbarInterval < 30;
+  getSeverityClass(): string {
+    if (this.progressbarInterval < 30) {
+      return 'status-critical';
+    } else if (this.progressbarInterval >= 30 && this.progressbarInterval < 90) {
+      return 'status-warning';
+    } else if (this.progressbarInterval >= 90 && this.progressbarInterval < 180) {
+      return 'status-attention';
+    }
+    return 'status-good';
   }
 
-  isOrange(): boolean {
-    return this.progressbarInterval > 30 && this.progressbarInterval < 90;
-  }
-
-  isYellow(): boolean {
-    return this.progressbarInterval > 90 && this.progressbarInterval < 180;
-  }
-
-  isGreen(): boolean {
-    return this.progressbarInterval > 180;
-  }
 
   // onSave(uavTO: UavTO) {
   //   this.httpService.saveUavTO(uavTO).subscribe((data: UavTO) => {

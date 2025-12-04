@@ -36,6 +36,9 @@ import {InfoDialogComponent} from "./components/info-dialog/info-dialog.componen
 import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-failure.component";
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
 
+// Добавляем импорт сервисов темы
+import { ThemeService } from './services/theme.service';
+import { ThemeInitService } from './services/theme-init.service';
 
 @NgModule({
   imports: [
@@ -48,7 +51,6 @@ import {FailureHistoryComponent} from "./components/failure-history/failure-hist
     AppCoreUIModule,
     DropdownModule,
     NgbModule,
-    //InputSwitch
   ],
   declarations: [
     AppComponent,
@@ -74,7 +76,6 @@ import {FailureHistoryComponent} from "./components/failure-history/failure-hist
   ],
   bootstrap: [ AppComponent ],
   providers: [
-    //provideAnimationsAsync(),
     providePrimeNG({
       theme: {
         preset: Aura,
@@ -84,12 +85,19 @@ import {FailureHistoryComponent} from "./components/failure-history/failure-hist
         }
       },
     }),
-    //{ provide: APP_CONFIG, useValue: AppConfig },
     AppConfigService,
+    ThemeService,
+    ThemeInitService,
     {
       provide: APP_INITIALIZER,
       useFactory: (appConfigService: AppConfigService) => () => appConfigService.initialize(),
       deps: [AppConfigService],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (themeInitService: ThemeInitService) => () => themeInitService.initialize(),
+      deps: [ThemeInitService],
       multi: true
     }
   ]

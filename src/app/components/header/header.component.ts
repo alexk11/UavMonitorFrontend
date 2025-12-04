@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {ThemeService} from "../../services/theme.service";
+import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: 'app-header',
@@ -7,8 +7,8 @@ import {ThemeService} from "../../services/theme.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-	@Input() pageTitle!: string;
-	@Input() logoSrc!: string;
+  @Input() pageTitle!: string;
+  @Input() logoSrc!: string;
 
   constructor(public themeService: ThemeService) {}
 
@@ -16,4 +16,11 @@ export class HeaderComponent {
     this.themeService.toggleTheme();
   }
 
+  getThemeIcon(): string {
+    return this.themeService.isDarkMode() ? 'pi pi-sun' : 'pi pi-moon';
+  }
+
+  getThemeLabel(): string {
+    return this.themeService.isDarkMode() ? 'Переключить на светлую тему' : 'Переключить на темную тему';
+  }
 }

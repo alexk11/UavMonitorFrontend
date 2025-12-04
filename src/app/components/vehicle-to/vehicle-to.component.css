@@ -1,8 +1,7 @@
 .parent {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 h5 {
@@ -11,6 +10,114 @@ h5 {
   padding-bottom: 0.2em;
 }
 
+.to-status-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  background-color: var(--bg-card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-light);
+}
+
+.days-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--bg-secondary);
+  border: 3px solid;
+  transition: all 0.3s ease;
+}
+
+.days-number {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.days-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.status-critical {
+  border-color: #dc3545;
+  color: #dc3545;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
+}
+
+.status-warning {
+  border-color: #fd7e14;
+  color: #fd7e14;
+  background: linear-gradient(135deg, rgba(253, 126, 20, 0.1) 0%, rgba(253, 126, 20, 0.05) 100%);
+}
+
+.status-attention {
+  border-color: #ffc107;
+  color: #daa520;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+}
+
+.status-good {
+  border-color: #28a745;
+  color: #28a745;
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+}
+
+.status-overdue {
+  border-color: #6c757d;
+  color: #6c757d;
+  background: linear-gradient(135deg, rgba(108, 117, 125, 0.1) 0%, rgba(108, 117, 125, 0.05) 100%);
+}
+
+.progress-container {
+  flex: 1;
+  position: relative;
+}
+
+.progress-bar-custom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  border-radius: 8px;
+  transition: all 0.5s ease;
+}
+
+:host ::ng-deep .p-progressbar {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  overflow: visible;
+}
+
 :host ::ng-deep .p-progressbar-value {
-  background-color: #FFFFFF;
+  background-color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .to-status-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .days-display {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .days-number {
+    font-size: 2.5rem;
+  }
+
+  .progress-container {
+    width: 100%;
+  }
 }

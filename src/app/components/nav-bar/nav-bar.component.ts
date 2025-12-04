@@ -63,24 +63,4 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['users'], { skipLocationChange: true }).then(() => "Ok");
   }
 
-  toggleLightDark(): void {
-    this.isDarkMode = !this.isDarkMode;
-
-    const head = this.document.getElementsByTagName('head')[0];
-    const themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;
-    const styleName = this.isDarkMode ? "dark" : "light";
-
-    if (themeLink) {
-      themeLink.href = `assets/themes/lara-${styleName}-blue/theme.css`;
-    } else {
-      const style = this.document.createElement('link');
-      style.id = 'app-theme';
-      style.rel = 'stylesheet';
-      style.type = 'text/css';
-      style.href = `assets/themes/lara-${styleName}-blue/theme.css`;
-
-      head.appendChild(style);
-    }
-  }
-
 }

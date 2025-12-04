@@ -18,6 +18,16 @@ export class VehicleTableComponent implements OnInit {
   message: string = 'Действительно удалить?';
   dialogVisible: boolean = false;
 
+  // Type filter
+  selectedType: string | null = null;
+  vehicleTypes: { label: string; value: string | null }[] = [];
+  currentSearchValue: string = '';
+
+  // Description editor
+  editDialogVisible: boolean = false;
+  editingVehicle: Vehicle | null = null;
+  editedDescription: string = '';
+
   cols = [
     { field: 'id', header: 'Id' },
     { field: 'type', header: 'Тип' },
@@ -39,7 +49,16 @@ export class VehicleTableComponent implements OnInit {
         this.enumerateVehicles(data);
         this.allVehicles = data;
         this.displayedVehicles = data;
+        this.extractVehicleTypes();
       });
+  }
+
+  private extractVehicleTypes(): void {
+    const uniqueTypes = [...new Set(this.allVehicles.map(v => v.type))];
+    this.vehicleTypes = [
+      { label: 'Все типы', value: null },
+      ...uniqueTypes.map(type => ({ label: type, value: type }))
+    ];
   }
 
   private enumerateVehicles(vehicles: Vehicle[]): void {
@@ -50,18 +69,30 @@ export class VehicleTableComponent implements OnInit {
   }
 
   applyFilter(event: Event): void {
+    this.currentSearchValue = (event.target as HTMLInputElement).value;
+    this.applyFilters();
+  }
+
+  applyTypeFilter(): void {
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
     this.enumerateVehicles(this.allVehicles);
-    const filterValue = (event.target as HTMLInputElement).value;
-    if (filterValue.length == 0) {
-      this.displayedVehicles = this.allVehicles;
-      return;
+    let filteredVehicles = this.allVehicles;
+
+    // Apply type filter
+    if (this.selectedType) {
+      filteredVehicles = filteredVehicles.filter(v => v.type === this.selectedType);
     }
-    let filteredVehicles: Vehicle[] = [];
-    for (let v of this.allVehicles) {
-      if (this.containsFilterVal(v, filterValue)) {
-        filteredVehicles.push(v as Vehicle);
-      }
+
+    // Apply search filter
+    if (this.currentSearchValue.length > 0) {
+      filteredVehicles = filteredVehicles.filter(v =>
+        this.containsFilterVal(v, this.currentSearchValue)
+      );
     }
+
     this.enumerateVehicles(filteredVehicles);
     this.displayedVehicles = filteredVehicles;
   }
@@ -100,6 +131,13 @@ export class VehicleTableComponent implements OnInit {
 
   addVehicle() {
     this.router.navigate(['uav-add'], { skipLocationChange: true}).then(() => "Ok");
+  }
+
+  onDescriptionEdit(vehicle: Vehicle): void {
+    this.httpService.updateVehicle(vehicle).subscribe(() => {
+      // Vehicle updated successfully
+      console.log('Vehicle description updated');
+    });
   }
 
   next() {

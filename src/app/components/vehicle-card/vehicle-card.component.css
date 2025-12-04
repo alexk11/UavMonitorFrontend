@@ -34,8 +34,52 @@ h4 {
 
 .uav-info {
   grid-row-start: 2;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.uav-info p {
+  margin: 0;
+  padding: 0;
+}
+
+.uav-info p li {
+  list-style: none;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.uav-info p li:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.uav-info p[contenteditable="true"] li {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+  cursor: text;
+}
+
+.uav-info p[contenteditable="true"] li:hover {
+  background-color: #ffecb5;
+  border-color: #ff9800;
+  box-shadow: 0 2px 4px rgba(255, 193, 7, 0.2);
+}
+
+.uav-info p[contenteditable="true"] li:focus {
+  outline: none;
+  border-color: #ff9800;
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
 }
 
 .btn-row {
   grid-row-start: 3;
+  margin-top: 1rem;
 }

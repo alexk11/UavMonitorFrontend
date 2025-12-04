@@ -117,6 +117,18 @@ export class ImageGalleryComponent implements OnInit {
   //   });
   // }
 
+  nextImage(): void {
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+    }
+  }
+
+  previousImage(): void {
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+    }
+  }
+
   private blobToBase64(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

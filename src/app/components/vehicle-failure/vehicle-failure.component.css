@@ -1,0 +1,21 @@
+/* Zebra Striping for failure table */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.04);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
+  background-color: var(--hover-light);
+}
+
+:host ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.04);
+}
+
+/* Dark theme zebra striping */
+body.dark-theme :host ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
+}
+
+body.dark-theme :host ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
+}

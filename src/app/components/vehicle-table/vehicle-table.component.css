@@ -169,8 +169,9 @@
   background-color: var(--hover-light);
 }
 
+/* Enhanced Zebra Striping - Even rows */
 ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: var(--bg-secondary);
+  background-color: rgba(193, 39, 39, 0.04);
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
@@ -178,7 +179,16 @@
 }
 
 ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background-color: var(--bg-secondary);
+  background-color: rgba(193, 39, 39, 0.04);
+}
+
+/* Dark theme zebra striping */
+body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
+}
+
+body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
 }
 
 ::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {

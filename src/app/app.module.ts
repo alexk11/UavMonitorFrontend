@@ -35,6 +35,7 @@ import {VehicleToComponent} from "./components/vehicle-to/vehicle-to.component";
 import {InfoDialogComponent} from "./components/info-dialog/info-dialog.component";
 import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-failure.component";
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
+import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-insurance.component";
 
 // Добавляем импорт сервисов темы
 import { ThemeService } from './services/theme.service';
@@ -72,7 +73,8 @@ import { ThemeInitService } from './services/theme-init.service';
     VehicleToComponent,
     VehicleFailureComponent,
     FailureHistoryComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    VehicleInsuranceComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [

@@ -1,0 +1,36 @@
+<section class="layout">
+  <div class="dv">
+    <button title="К списку БВС" (click)="navigateToUAVs()">БВС</button>
+  </div>
+  <div class="dv">
+    <button title="К списку пользователей (роль Admin)"
+            (click)="navigateToUsers()"
+            [disabled]="!isAdmin()">
+      Пользователи
+    </button>
+  </div>
+  <div class="dv">
+    <button title="Действия в приложении (роль Admin)"
+            (click)="navigateToUsers()"
+            [disabled]="!isAdmin()">
+      Логи
+    </button>
+  </div>
+  <div class="marginLeft">
+    <!--button (click)="toggleLightDark()">
+      <i style="margin-top: 4px" class="pi" [ngClass]="{'pi-moon': isDarkMode, 'pi-sun': !isDarkMode}"></i>
+    </button-->
+    <p title="Текущий пользователь" style="margin-top: 1.3em">{{username}}:</p>
+  </div>
+  <div class="user-menu" title="Профиль пользователя | Выход">
+      <p-menu #menu
+              [model]="items"
+              [popup]="true"
+              appendTo="body"/>
+      <p-button (click)="menu.toggle($event)"
+                [style]="{width: '2.5em', color: 'black', background: '#EEEEEE', 'border-color': '#EEEEEE'}">
+        <i class="pi pi-ellipsis-v" style="float: right"></i>
+      </p-button>
+  </div>
+</section>
+<router-outlet/>

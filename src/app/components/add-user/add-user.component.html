@@ -1,0 +1,100 @@
+<div class="card m-2">
+  <app-info-dialog
+    [message]="message"
+    [display]="dialogVisible"
+    (confirm)="onConfirm()">
+  </app-info-dialog>
+  <h5 class="card-header fw-bolder" style="color: slategray; font-size: medium">Новый пользователь</h5>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row" style="display: flex">
+        <div class="form-group col-5" style="padding: 0 10px 5px 0">
+          <label>Имя</label>
+          <input
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+          />
+          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">
+              {{ required }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-5" style="padding: 0 10px 5px 0">
+          <label>Фамилия</label>
+          <input
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+          />
+          <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">{{ required }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row" style="display: flex; margin-bottom: 10px">
+        <div class="form-group col-5" style="padding-right: 10px">
+          <label>Логин</label>
+          <input
+            type="text"
+            formControlName="login"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.login.errors }"
+          />
+          <div *ngIf="submitted && f.login.errors" class="invalid-feedback">
+            <div *ngIf="f.login.errors.required">
+              {{ required }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-5" style="padding: 0 10px 5px 0">
+          <label>Пароль</label>
+          <input
+            type="text"
+            formControlName="password"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">
+              {{ required }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-4">
+          <label>Роль</label>
+          <p-select [options]="roles"
+                    formControlName="role"
+                    placeholder="Выберите роль"
+                    optionLabel="name"
+                    class="form-control role-select"
+                    [ngClass]="{ 'is-invalid': submitted && f.role.errors}">
+          </p-select>
+          <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+            {{ required }}
+          </div>
+        </div>
+      </div>
+      <div class="text-right mt-2" style="float: right; margin-right: 0.5rem">
+        <button class="btn btn-secondary m-1" type="reset" (click)="onReset()" title="Очистить">
+          Отменить
+        </button>
+        <button class="btn btn-primary m-1" title="Создать пользователя">Сохранить</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="display: grid; margin-bottom: 1em">
+  <button class="btn btn-secondary m-2"
+          style="float: left; width: 8%"
+          type="button"
+          (click)="onBack()"
+          title="К списку пользователей">
+    Назад
+  </button>
+</div>

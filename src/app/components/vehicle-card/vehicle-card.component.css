@@ -1,0 +1,183 @@
+.card {
+  border: var(--border-color) solid 1px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pbt {
+  padding-right: 0.15em;
+}
+
+.d-btn {
+  float: right;
+  padding-right: 10px;
+}
+
+h4 {
+  border-bottom-style: double;
+  border-bottom-color: var(--border-color);
+  padding-bottom: 0.2em;
+  color: var(--text-color);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr) fit-content(20%);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  padding: 2px;
+}
+
+.uav-info {
+  grid-row-start: 2;
+}
+
+.btn-row {
+  grid-row-start: 3;
+}
+
+.insurance-form-container {
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.insurance-form-container h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.required {
+  color: #dc3545;
+}
+
+.expiration-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.days-display {
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid;
+  transition: all 0.3s ease;
+}
+
+.days-critical {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.dark-theme .days-critical {
+  background-color: #5a1a1a;
+  border-color: #dc3545;
+  color: #f8d7da;
+}
+
+.days-warning {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.dark-theme .days-warning {
+  background-color: #4d3d00;
+  border-color: #ffc107;
+  color: #fff3cd;
+}
+
+.days-ok {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.dark-theme .days-ok {
+  background-color: #0d3d1a;
+  border-color: #28a745;
+  color: #d4edda;
+}
+
+.section-divider {
+  margin: 1.5rem 0;
+  border-top: 1px solid var(--border-color);
+  transition: border-color 0.3s ease;
+}
+
+.pdf-viewer-container {
+  padding: 1rem;
+}
+
+.pdf-viewer-container h5 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 1.8rem;
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+::ng-deep .p-datepicker {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+::ng-deep p-datepicker input {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border-color: var(--input-border);
+  transition: all 0.3s ease;
+}
+
+::ng-deep p-datepicker input:focus {
+  border-color: var(--primary-color);
+}

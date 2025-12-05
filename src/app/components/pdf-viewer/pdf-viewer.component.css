@@ -1,0 +1,19 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr) fit-content(20%);
+}
+
+.pdf-doc {
+  border-bottom-style: double;
+  border-bottom-color: lightgray;
+}
+
+.btn-row {
+  grid-row-start: 2;
+}
+
+h4.title {
+  text-align: center;
+  color: #A80000;
+  font-size: large;
+}

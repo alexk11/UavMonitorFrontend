@@ -1,0 +1,5 @@
+<app-login-form *ngIf="!isAuthenticated" (loginEvent)="onLogin($event)"/>
+<span class="p-2 justify-content-center" *ngIf="loginError; else appBlock">{{loginError}}</span>
+<ng-template #appBlock>
+  <app-nav-bar *ngIf="isAuthenticated" [username]="userName" (logoutEvent)="onLogout()"/>
+</ng-template>

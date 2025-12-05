@@ -1,0 +1,50 @@
+<div class="parent">
+  <div class="div1">
+    <div class="gallery-container" *ngIf="images.length > 0">
+      <button class="arrow-btn arrow-left"
+              (click)="previousImage()"
+              [disabled]="images.length <= 1"
+              title="Previous image">
+        &#8249;
+      </button>
+
+      <div class="image-wrapper">
+        <img [src]="images[currentImageIndex].imageSrc"
+             [alt]="images[currentImageIndex].alt"
+             class="gallery-image"/>
+        <div class="image-counter">
+          {{ currentImageIndex + 1 }} / {{ images.length }}
+        </div>
+      </div>
+
+      <button class="arrow-btn arrow-right"
+              (click)="nextImage()"
+              [disabled]="images.length <= 1"
+              title="Next image">
+        &#8250;
+      </button>
+    </div>
+  </div>
+  <div class="btn-row mt-2">
+    <div class="text-right mt-2" style="float: right">
+      <button class="btn btn-secondary m-1"
+              [disabled]="images.length == 0"
+              type="button"
+              (click)="onRemove()"
+              title="Удалить изображение">
+        Удалить
+      </button>
+      <input #uploadFile
+             type="file"
+             (change)="onFileSelected($event)"
+             hidden="hidden"
+             accept="application/image"/>
+      <button class="btn btn-primary"
+              type="button"
+              (click)="uploadFile.click()"
+              title="Загрузить новое изображение">
+        Загрузить
+      </button>
+    </div>
+  </div>
+</div>

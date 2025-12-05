@@ -1,0 +1,14 @@
+.wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  overflow: hidden;
+  text-align: left;
+  position: relative;
+  height: 60px;
+  background-color: white;
+  color: #1F6C8B;
+  font-family: Arial, serif;
+}

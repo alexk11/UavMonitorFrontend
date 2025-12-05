@@ -1,0 +1,40 @@
+<h4 class="p-3 title">{{title}}</h4>
+<app-info-dialog
+  [message]="message"
+  [display]="confirmVisible"
+  (confirm)="onConfirm()">
+</app-info-dialog>
+<app-info-dialog
+  [message]="message"
+  [display]="infoVisible"
+  (confirm)="infoVisible = false">
+</app-info-dialog>
+<div class="parent">
+  <div class="pdf-doc pb-2" *ngIf="pdfUrl && isContent">
+    <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
+  </div>
+  <span *ngIf="!isContent">Нет данных.</span>
+  <div class="btn-row">
+    <div class="text-right mt-2" style="float: right">
+      <button class="btn btn-secondary m-1"
+              [disabled]="!isContent"
+              type="button"
+              (click)="onRemove()"
+              title="Удалить PDF документ">
+        Удалить
+      </button>
+      <input #uploadFile
+             type="file"
+             (change)="onFileSelected($event)"
+             hidden="hidden"
+             accept="application/pdf"/>
+      <button class="btn btn-primary"
+              type="button"
+              (click)="uploadFile.click()"
+              title="Загрузить новый PDF документ">
+        Загрузить
+      </button>
+    </div>
+  </div>
+
+</div>

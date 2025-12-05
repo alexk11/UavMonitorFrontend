@@ -1,0 +1,207 @@
+html {
+  font-size: 14px;
+}
+
+.card {
+  margin-bottom: 1rem;
+  background: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.type-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.type-filter label {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--primary-color);
+  font-size: 15px;
+}
+
+.grid-container > div {
+  background-color: var(--bg-secondary);
+  text-align: center;
+  padding: 0 0;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.grid-container h3 {
+  background: linear-gradient(90deg, #A80000 0%, #D63031 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  margin: 0;
+  padding: 5px 0;
+}
+
+.d-btn {
+  float: right;
+  padding-right: 10px;
+}
+
+/* Enhanced button styles */
+.grid-container button {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a52 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.grid-container button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, #1a3a52 0%, var(--primary-color) 100%);
+}
+
+.grid-container button:disabled {
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+/* Table enhancements */
+::ng-deep .p-datatable {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #1e5a7d 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 3px solid #1a3a52;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: var(--bg-color);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background: linear-gradient(90deg, rgba(38, 77, 115, 0.1) 0%, rgba(38, 77, 115, 0.05) 100%);
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+/* Checkbox styling */
+::ng-deep .p-checkbox {
+  border: 2px solid var(--primary-color);
+}
+
+::ng-deep .p-checkbox.p-checkbox-checked .p-checkbox-box {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Search input styling */
+::ng-deep .p-inputtext {
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-inputtext:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(38, 77, 115, 0.1);
+}
+
+/* Paginator styling */
+::ng-deep .p-paginator {
+  background: var(--bg-secondary);
+  border-top: 2px solid var(--primary-color);
+  padding: 1rem;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+}
+
+::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background: rgba(38, 77, 115, 0.1);
+  border-radius: 4px;
+}
+
+/* Sort icon styling */
+p-sorticon {
+  color: white;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+p-sorticon:hover {
+  opacity: 1;
+}
+
+/* Dropdown styling */
+::ng-deep .p-dropdown {
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-dropdown:hover {
+  border-color: var(--primary-color);
+}
+
+::ng-deep .p-dropdown.p-focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(38, 77, 115, 0.1);
+}
+
+/* Info message at bottom */
+span {
+  color: var(--text-light);
+  font-style: italic;
+  font-size: 13px;
+  display: block;
+  margin-top: 1rem;
+  padding-left: 5px;
+}

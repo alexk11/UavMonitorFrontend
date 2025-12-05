@@ -1,0 +1,52 @@
+.app-logo {
+  height: 80px;
+  object-fit: contain;
+}
+
+.app-header {
+  background-color: #B3C3DC;
+  height: 140px;
+  padding: 0;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.dark-theme .app-header {
+  background-color: #0d0d0d;
+}
+
+.app-title {
+  font-size: 1.4em;
+  color: white;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+  margin: 0;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.theme-icon {
+  font-size: 1.5em;
+  line-height: 1;
+}

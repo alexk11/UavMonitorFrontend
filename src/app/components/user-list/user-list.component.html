@@ -1,0 +1,113 @@
+<div class="grid-container">
+  <app-info-dialog
+    [message]="message"
+    [display]="dialogVisible"
+    (confirm)="onConfirm()">
+  </app-info-dialog>
+  <h3 style="text-align: right; color: #A80000">Список пользователей</h3>
+  <div class="mb-2">
+    <button style="float: right"
+            title="Удалить выбранных пользователей"
+            (click)="onDelete()"
+            [disabled]="selectedUsers.length == 0">
+      Удалить
+    </button>
+    <button style="float: right; margin-right: 5px"
+            title="Создать нового пользователя"
+            (click)="addUser()">
+      Добавить
+    </button>
+  </div>
+</div>
+<div class="card">
+  <p-table
+    [columns]="cols"
+    [value]="displayedUsers"
+    showGridlines
+    stripedRows
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [rows]="10"
+    [first]="first"
+    [showCurrentPageReport]="true"
+    [(selection)]="selectedUsers"
+    [tableStyle]="{'min-width': '50rem'}"
+    currentPageReportTemplate="Показаны {first}-{last} из {totalRecords} записей"
+    (onPage)="pageChange($event)"
+  >
+    <ng-template #caption>
+      <div class="flex">
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input
+            pInputText type="text"
+            (input)="applyFilter($event)"
+            (keyup)="applyFilter($event)"
+            placeholder="Поиск в таблице" />
+        </p-iconfield>
+      </div>
+    </ng-template>
+    <ng-template #header let-columns>
+      <tr>
+        <th pSortableColumn="id" style="width:8%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(0)?.header }}
+            <p-sortIcon field="id" />
+          </div>
+        </th>
+        <th pSortableColumn="login" style="width:18%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(1)?.header }}
+            <p-sortIcon field="login" />
+          </div>
+        </th>
+        <th pSortableColumn="surname" style="width:19%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(2)?.header }}
+            <p-sortIcon field="surname" />
+          </div>
+        </th>
+        <th pSortableColumn="lastname" style="width:19%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(3)?.header }}
+            <p-sortIcon field="lastname" />
+          </div>
+        </th>
+        <th pSortableColumn="role" style="width:14%">
+          <div class="flex items-center gap-2">
+            {{ cols.at(4)?.header }}
+            <p-sortIcon field="role" />
+          </div>
+        </th>
+        <th pSortableColumn="enabled" style="width:18%">
+          <div class="flex items-center gap-2">
+            Активирован
+            <p-sortIcon field="enabled" />
+          </div>
+        </th>
+        <th style="width:4%">
+          <div style="margin-left:5px">#</div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-rowData let-columns="columns">
+      <tr (dblclick)="onUserRowDoubleClick(rowData)">
+        <td *ngFor="let col of columns">
+          {{ rowData[col.field] }}
+        </td>
+        <td>
+          <i class="pi" [ngClass]="{
+              'text-green-500 pi-check-circle green': rowData.enabled,
+              'text-red-500 pi-times-circle red': !rowData.enabled }">
+          </i>
+        </td>
+        <td>
+          <p-tableCheckbox [value]="rowData"/>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<span>* Нажмите 2 раза на строку в таблице для просмотра/редактирования профиля пользователя</span>

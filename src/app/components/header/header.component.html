@@ -1,7 +1,13 @@
 <header class="app-header">
-  <img src={{logoSrc}} class="app-logo" alt="logo" />
+  <img [src]="logoSrc" class="app-logo" alt="logo" />
   <h1 class="app-title">{{pageTitle}}</h1>
-  <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
-    <span class="theme-icon">{{ themeService.isDarkMode() ? '☀️' : '🌙' }}</span>
+  <button class="theme-toggle"
+          (click)="toggleTheme()"
+          [attr.aria-label]="getThemeLabel()"
+          [title]="getThemeLabel()"
+          pTooltip="{{getThemeLabel()}}"
+          tooltipPosition="bottom">
+    <i [class]="getThemeIcon()" class="theme-icon"></i>
+    <!--span class="theme-text">{{ themeService.isDarkMode() ? 'Светлая' : 'Темная' }}</span-->
   </button>
 </header>

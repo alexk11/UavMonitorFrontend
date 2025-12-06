@@ -69,17 +69,17 @@
       </p-tabpanel>
       <p-tabpanel value="1">
         <!--ng-template pTemplate="content" => Lazy loading NOT working !! -->
-           <app-pdf-viewer [uav]="uavInfo" [docType]="'Slg'"/>
+        <app-pdf-viewer [uav]="uavInfo" [docType]="'Slg'"/>
         <!--/ng-template-->
       </p-tabpanel>
       <p-tabpanel value="2">
         <!--ng-template pTemplate="content"-->
-           <app-pdf-viewer [uav]="uavInfo" [docType]="'EvalAct'"/>
+        <app-pdf-viewer [uav]="uavInfo" [docType]="'EvalAct'"/>
         <!--/ng-template-->
       </p-tabpanel>
       <p-tabpanel value="3">
         <!--ng-template pTemplate="content"-->
-          <app-vehicle-to [uav]="uavInfo"/>
+        <app-vehicle-to [uav]="uavInfo"/>
         <!--/ng-template-->
       </p-tabpanel>
       <p-tabpanel value="4">
@@ -98,10 +98,10 @@
 </div>
 <div style="display: grid; margin-bottom: 2em">
   <button class="btn btn-secondary m-1"
-      style="float: left; width: 8%"
-      type="button"
-      (click)="onBack()"
-      title="К списку БВС">
+          style="float: left; width: 8%"
+          type="button"
+          (click)="onBack()"
+          title="К списку БВС">
     Назад
   </button>
 </div>

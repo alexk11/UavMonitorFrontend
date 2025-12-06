@@ -89,6 +89,16 @@ export class HttpService {
       );
   }
 
+  /** PUT: update vehicle on the server */
+  updateVehicle(vehicle: Vehicle): Observable<any> {
+    this.errorMessage = '';
+    return this.http.put(`${this.backUrl}/updateUav`, vehicle, { headers: this.getAuthHeader() })
+      .pipe(
+        tap(_ => this.log(`Updated vehicle id=${vehicle.vehicleId}`)),
+        catchError(this.handleError<any>('updateVehicle'))
+      );
+  }
+
 // Users table methods
   /** GET users from the server */
   getUsers(): Observable<User[]> {

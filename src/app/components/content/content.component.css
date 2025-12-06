@@ -1,3 +1,8 @@
+.app-content {
+  width: 99%;
+  margin-left: 0.3em;
+}
+
 div.col {
   padding: 0 !important;
 }

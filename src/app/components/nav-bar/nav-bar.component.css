@@ -1,7 +1,7 @@
 .layout {
   width: 100%;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   border-bottom: 2px solid var(--border-color);
   padding: 15px 0;
   margin-bottom: 25px;

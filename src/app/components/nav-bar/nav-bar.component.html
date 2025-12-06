@@ -3,14 +3,14 @@
     <button title="К списку БВС" (click)="navigateToUAVs()">БВС</button>
   </div>
   <div class="dv">
-    <button title="К списку пользователей (роль Admin)"
+    <button title="К списку пользователей"
             (click)="navigateToUsers()"
             [disabled]="!isAdmin()">
       Пользователи
     </button>
   </div>
   <div class="dv">
-    <button title="Действия в приложении (роль Admin)"
+    <button title="Действия в приложении"
             (click)="navigateToUsers()"
             [disabled]="!isAdmin()">
       Логи

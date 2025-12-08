@@ -35,6 +35,7 @@ import {VehicleToComponent} from "./components/vehicle-to/vehicle-to.component";
 import {InfoDialogComponent} from "./components/info-dialog/info-dialog.component";
 import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-failure.component";
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
+import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-insurance.component";
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import {FailureHistoryComponent} from "./components/failure-history/failure-hist
     ActivityComponent,
     VehicleToComponent,
     VehicleFailureComponent,
+    VehicleInsuranceComponent,
     FailureHistoryComponent,
     InfoDialogComponent
   ],

@@ -1,0 +1,87 @@
+.parent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.insurance-stripe {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.date-picker-container {
+  flex: 0 0 auto;
+  min-width: 300px;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #495057;
+  display: block;
+}
+
+.days-display {
+  flex: 0 0 auto;
+  min-width: 200px;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  margin-left: auto;
+}
+
+.days-number {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.days-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status-good {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.status-attention {
+  background: linear-gradient(135deg, #ffc107 0%, #ffdb4d 100%);
+  color: #333;
+}
+
+.status-warning {
+  background: linear-gradient(135deg, #fd7e14 0%, #ff922b 100%);
+}
+
+.status-critical {
+  background: linear-gradient(135deg, #dc3545 0%, #e35d6a 100%);
+}
+
+.status-expired {
+  background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+}
+
+.pdf-section {
+  margin-top: 1rem;
+}
+
+.alert {
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  flex: 1;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}

@@ -1,0 +1,46 @@
+<app-info-dialog
+  [message]="message"
+  [display]="infoVisible"
+  (confirm)="infoVisible = false">
+</app-info-dialog>
+
+<h5 style="text-align: center; color: #A80000">Страхование</h5>
+
+<div class="card" style="border: none">
+  <div class="parent p-1 mb-3">
+    <div class="insurance-stripe">
+      <div class="date-picker-container">
+        <label for="insuranceDate" class="form-label">Дата истечения страховки:</label>
+        <p-datePicker
+          id="insuranceDate"
+          [(ngModel)]="insuranceDate"
+          (ngModelChange)="onDateChange()"
+          dateFormat="dd.mm.yy"
+          [showIcon]="true"
+          appendTo="body"
+          placeholder="Выберите дату"
+          [style]="{'width': '100%'}">
+        </p-datePicker>
+        <button class="btn btn-primary mt-2"
+                type="button"
+                (click)="onSave()"
+                title="Сохранить дату страховки">
+          Сохранить дату
+        </button>
+      </div>
+
+      <div *ngIf="insuranceDate" class="days-display" [ngClass]="getSeverityClass()">
+        <div class="days-number">{{ daysLeft >= 0 ? daysLeft : -daysLeft }}</div>
+        <div class="days-label">{{ getDaysLeftText() }}</div>
+      </div>
+
+      <div *ngIf="!insuranceDate" class="alert alert-info">
+        Дата истечения страховки не установлена
+      </div>
+    </div>
+  </div>
+
+  <div class="pdf-section">
+    <app-pdf-viewer [uav]="uav" [docType]="'Insurance'"/>
+  </div>
+</div>

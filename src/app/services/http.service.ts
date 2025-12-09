@@ -14,6 +14,8 @@ import {UavFailure} from "../model/uav-failure";
 import {Activity} from "../model/activity";
 import {UavFailureStep} from "../model/uav-failure-step";
 import {Router} from "@angular/router";
+import {UavInsuranceData} from "../model/uav-insurance-data";
+import {formatDate} from "@angular/common";
 
 
 @Injectable({ providedIn: 'root' })
@@ -172,6 +174,20 @@ export class HttpService {
         tap(_ => this.messageService.add(`Posted uav data for='${data.uavId}'`)),
         catchError(this.handleError<UavInfo>(`postUavInfo id=${data.uavId}`))
       );
+  }
+
+  putInsuranceExpiryDate(uavId: string, expiryDate: Date): Observable<any> {
+    this.errorMessage = '';
+    const url = `${this.backUrl}/updateInsuranceExpiryDate`;
+    const body: UavInsuranceData = {
+      uavId: uavId,
+      expiryDate: formatDate(expiryDate, 'yyyy-MM-dd', 'en'),
+    };
+    return this.http.put(url, body, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.log(`Updated insurance expiry date for id=${uavId}`)),
+            catchError(this.handleError<any>('putInsuranceExpiryDate'))
+        );
   }
 
 // PDF tabs methods (СЛГ, Акт оценки, Страхование)
@@ -403,7 +419,7 @@ export class HttpService {
       this.errorMessage = `Ошибка: ${err.message}`;
       // token expired, navigate to login page
       if (err.status == 401 && err.error.message === 'Unauthorized path') {
-       this.router.navigate(['content', {msg: 'Token expired'}]).then(() => 'Ok');
+       this.router.navigate(['content', {msg: 'Token expired', skipLocationChange: true}]).then(() => 'Ok');
       }
       // Unset authorization token
       // this.setAuthToken(null);

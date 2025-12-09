@@ -11,7 +11,7 @@ export class VehicleInsuranceComponent implements OnInit {
 
   @Input() uav!: UavInfo;
 
-  insuranceDate: Date | undefined;
+  insuranceExpiryDate: Date | undefined;
   daysLeft: number = 0;
   message: string = '';
   infoVisible: boolean = false;
@@ -19,20 +19,20 @@ export class VehicleInsuranceComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
-    if (this.uav.insuranceTs) {
-      this.insuranceDate = new Date(this.uav.insuranceTs);
+    if (this.uav.insuranceExpiryTs) {
+      this.insuranceExpiryDate = new Date(this.uav.insuranceExpiryTs);
     }
     this.calculateDaysLeft();
   }
 
   private calculateDaysLeft(): void {
-    if (!this.insuranceDate) {
+    if (!this.insuranceExpiryDate) {
       this.daysLeft = -1;
       return;
     }
 
     const now = new Date();
-    const expirationDate = new Date(this.insuranceDate);
+    const expirationDate = new Date(this.insuranceExpiryDate);
     const differenceInMs = expirationDate.getTime() - now.getTime();
     const millisecondsInDay = 1000 * 60 * 60 * 24;
     this.daysLeft = Math.floor(differenceInMs / millisecondsInDay);
@@ -43,14 +43,15 @@ export class VehicleInsuranceComponent implements OnInit {
   }
 
   onSave(): void {
-    if (!this.insuranceDate) {
+    if (!this.insuranceExpiryDate) {
       this.message = 'Пожалуйста, выберите дату';
       this.infoVisible = true;
       return;
     }
 
-    this.uav.insuranceTs = this.insuranceDate;
-    this.httpService.postUavInfo(this.uav).subscribe(() => {
+    this.uav.insuranceExpiryTs = this.insuranceExpiryDate;
+
+    this.httpService.putInsuranceExpiryDate(this.uav.uavId, this.uav.insuranceExpiryTs).subscribe(() => {
       if (this.httpService.errorMessage !== '') {
         this.message = this.httpService.errorMessage;
       } else {
@@ -59,6 +60,16 @@ export class VehicleInsuranceComponent implements OnInit {
       }
       this.infoVisible = true;
     });
+
+    // this.httpService.postUavInfo(this.uav).subscribe(() => {
+    //   if (this.httpService.errorMessage !== '') {
+    //     this.message = this.httpService.errorMessage;
+    //   } else {
+    //     this.message = 'Дата страхования сохранена';
+    //     this.calculateDaysLeft();
+    //   }
+    //   this.infoVisible = true;
+    // });
   }
 
   getSeverityClass(): string {
@@ -97,7 +108,7 @@ export class VehicleInsuranceComponent implements OnInit {
       msg += ' день';
     } else if(this.daysLeft > 10 && this.daysLeft < 20) {
       msg += ' дней';
-    } else if(lastDigit > 1 && lastDigit < 5) {
+    } else if(lastDigit > 1 && lastDigit < 5 && this.daysLeft <= 5) {
       msg += ' дня';
     } else {
       msg += ' дней';

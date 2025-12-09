@@ -4,7 +4,7 @@
   (confirm)="infoVisible = false">
 </app-info-dialog>
 
-<h5 style="text-align: center; color: #A80000">Страхование</h5>
+<h5 style="text-align: left; color: #A80000">Страхование</h5>
 
 <div class="card" style="border: none">
   <div class="parent p-1 mb-3">
@@ -13,7 +13,7 @@
         <label for="insuranceDate" class="form-label">Дата истечения страховки:</label>
         <p-datePicker
           id="insuranceDate"
-          [(ngModel)]="insuranceDate"
+          [(ngModel)]="insuranceExpiryDate"
           (ngModelChange)="onDateChange()"
           dateFormat="dd.mm.yy"
           [showIcon]="true"
@@ -29,12 +29,12 @@
         </button>
       </div>
 
-      <div *ngIf="insuranceDate" class="days-display" [ngClass]="getSeverityClass()">
+      <div *ngIf="insuranceExpiryDate" class="days-display" [ngClass]="getSeverityClass()">
         <div class="days-number">{{ daysLeft >= 0 ? daysLeft : -daysLeft }}</div>
         <div class="days-label">{{ getDaysLeftText() }}</div>
       </div>
 
-      <div *ngIf="!insuranceDate" class="alert alert-info">
+      <div *ngIf="!insuranceExpiryDate" class="alert alert-info">
         Дата истечения страховки не установлена
       </div>
     </div>

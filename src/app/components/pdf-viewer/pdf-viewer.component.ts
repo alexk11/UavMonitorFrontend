@@ -38,7 +38,7 @@ export class PdfViewerComponent implements OnInit {
     this.titleMap = new Map();
     this.titleMap.set("Slg", "Сертификат летной годности");
     this.titleMap.set("EvalAct", "Акт оценки");
-    this.titleMap.set("Insurance", "Страховка");
+    this.titleMap.set("Insurance", "Документ страхования");
     this.title = this.titleMap.get(this.docType);
   }
 

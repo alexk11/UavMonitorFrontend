@@ -1,21 +1,22 @@
-<div class="grid-container">
-  <app-info-dialog
-    [message]="message"
-    [display]="dialogVisible"
-    (confirm)="onConfirm()">
-  </app-info-dialog>
-  <h3 style="text-align: right; color: #A80000">Список пользователей</h3>
-  <div class="mb-2">
-    <button style="float: right"
+<app-info-dialog
+  [message]="message"
+  [display]="dialogVisible"
+  (confirm)="onConfirm()">
+</app-info-dialog>
+
+<div class="header-container">
+  <h3 class="page-title">Список пользователей</h3>
+  <div class="actions-container">
+    <button class="action-button add-button"
+            title="Создать нового пользователя"
+            (click)="addUser()">
+      <i class="pi pi-plus"></i> Добавить
+    </button>
+    <button class="action-button delete-button"
             title="Удалить выбранных пользователей"
             (click)="onDelete()"
             [disabled]="selectedUsers.length == 0">
-      Удалить
-    </button>
-    <button style="float: right; margin-right: 5px"
-            title="Создать нового пользователя"
-            (click)="addUser()">
-      Добавить
+      <i class="pi pi-trash"></i> Удалить
     </button>
   </div>
 </div>
@@ -27,7 +28,7 @@
     stripedRows
     [paginator]="true"
     [rowsPerPageOptions]="[5, 10, 20]"
-    [rows]="10"
+    [rows]="rows"
     [first]="first"
     [showCurrentPageReport]="true"
     [(selection)]="selectedUsers"
@@ -110,4 +111,7 @@
     </ng-template>
   </p-table>
 </div>
-<span>* Нажмите 2 раза на строку в таблице для просмотра/редактирования профиля пользователя</span>
+
+<p class="table-hint">
+  * Нажмите дважды на строку в таблице для просмотра или редактирования профиля пользователя
+</p>

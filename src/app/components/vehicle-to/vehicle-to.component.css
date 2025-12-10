@@ -1,3 +1,6 @@
+/* Основные стили для таблицы ТО */
+
+/* Grid layout для прогресс-бара */
 .parent {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -5,12 +8,218 @@
   gap: 5px;
 }
 
+/* Заголовок секции */
 h5 {
   border-bottom-style: double;
-  border-bottom-color: lightgray;
+  border-bottom-color: var(--border-color);
   padding-bottom: 0.2em;
+  text-align: center;
+  color: var(--primary-red);
 }
 
+/* Стили для прогресс-бара */
 :host ::ng-deep .p-progressbar-value {
   background-color: #FFFFFF;
+}
+
+/* Стили карточки */
+.card {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  background-color: var(--bg-card);
+}
+
+/* Стили для PrimeNG таблицы */
+::ng-deep .p-datatable {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Заголовок таблицы */
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--secondary-dark);
+  color: var(--text-inverse);
+  font-weight: 600;
+  padding: 16px;
+  border: none;
+  border-bottom: 2px solid var(--primary-dark);
+}
+
+/* Ячейки таблицы */
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+  background-color: var(--bg-card);
+}
+
+/* Hover эффект для строк */
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--hover-light);
+}
+
+/* Чередующиеся строки - четные */
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
+  background-color: var(--hover-light);
+}
+
+::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.08);
+}
+
+/* Темная тема для чередующихся строк */
+body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.15);
+}
+
+body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.15);
+}
+
+/* Линии сетки таблицы */
+::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+  border: 1px solid var(--border-color);
+}
+
+/* Сортируемые колонки */
+th.p-datatable-sortable-column:hover {
+  color: antiquewhite;
+  background-color: var(--secondary-dark) !important;
+}
+
+/* Стили для кнопок действий (Edit, Save, Delete) */
+::ng-deep .p-datatable .p-datatable-tbody button.p-button {
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody button.p-button:hover {
+  transform: translateY(-2px);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody button.p-button.p-button-rounded {
+  border-radius: 50%;
+}
+
+/* Стили для иконок в заголовке (добавить запись) */
+::ng-deep .p-datatable .p-datatable-thead i.pi {
+  transition: all 0.3s ease;
+  color: var(--text-inverse);
+}
+
+::ng-deep .p-datatable .p-datatable-thead i.pi:hover {
+  transform: scale(1.2);
+  color: var(--success-green);
+}
+
+/* Стили для тегов статуса */
+::ng-deep .p-tag {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 0.4rem 0.7rem;
+}
+
+/* Стили для редактируемых полей */
+::ng-deep .p-datatable .p-datatable-tbody .p-datepicker {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody .p-datepicker:focus,
+::ng-deep .p-datatable .p-datatable-tbody .p-datepicker:focus-within {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody .p-select {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody .p-select:not(.p-disabled):hover {
+  border-color: var(--primary-red);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody .p-select:not(.p-disabled).p-focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody textarea.p-inputtextarea {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody textarea.p-inputtextarea:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
+}
+
+/* Стили для панелей dropdown и datepicker */
+::ng-deep .p-select-overlay,
+::ng-deep .p-datepicker {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-medium);
+}
+
+::ng-deep .p-select-overlay .p-select-option {
+  color: var(--text-primary);
+  padding: 10px 15px;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .p-select-overlay .p-select-option:not(.p-disabled):hover {
+  background-color: var(--hover-light);
+}
+
+::ng-deep .p-select-overlay .p-select-option.p-selected {
+  background-color: var(--primary-red);
+  color: var(--text-inverse);
+}
+
+::ng-deep .p-select-overlay .p-select-option.p-focus {
+  background-color: var(--hover-light);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .parent {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+
+  ::ng-deep .p-datatable .p-datatable-tbody textarea.p-inputtextarea {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
 }

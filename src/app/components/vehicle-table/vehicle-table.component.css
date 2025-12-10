@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   padding: 0 10px;
 }
 
@@ -82,7 +82,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 ::ng-deep .type-dropdown {
@@ -158,7 +158,7 @@
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
   transition: background-color 0.2s ease;
@@ -169,26 +169,38 @@
   background-color: var(--hover-light);
 }
 
+/*::ng-deep .p-datatable .p-datatable-tbody > tr > td:hover {*/
+/*  background-color: var(--success-green);*/
+/*}*/
+
 /* Enhanced Zebra Striping - Even rows */
-::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.04);
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.05);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(odd) {
+  background-color: rgba(193, 39, 39, 0.05);
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
-  background-color: var(--hover-light);
+  background-color: white;
 }
 
 ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.04);
+  background-color: #fff8f3;
+}
+
+::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: white;
 }
 
 /* Dark theme zebra striping */
 body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.08);
+  background-color: rgba(193, 39, 39, 0.15);
 }
 
 body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.08);
+  background-color: rgba(193, 39, 39, 0.15);
 }
 
 ::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {

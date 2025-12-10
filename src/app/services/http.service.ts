@@ -414,15 +414,17 @@ export class HttpService {
     return (err: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(err);
-      this.messageService.add(`${operation} failed: ${err.message}`);
+      this.messageService.add(`${operation} failed: ${err.error.message}`);
       // Error message to be displayed in the calling component
-      this.errorMessage = `Ошибка: ${err.message}`;
-      // token expired, navigate to login page
+      this.errorMessage = `Ошибка: ${err.error.message}`;
+      // Auth token expired, navigate to login page
       if (err.status == 401 && err.error.message === 'Unauthorized path') {
-       this.router.navigate(['content', {msg: 'Token expired', skipLocationChange: true}]).then(() => 'Ok');
+        this.router.navigate(['content'],
+            { skipLocationChange: true, state: {msg: 'Token expired'} }).then(() => "Ok");
       }
       // Unset authorization token
       // this.setAuthToken(null);
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

@@ -3,8 +3,8 @@
   display: flex;
   gap: 8px;
   border-bottom: 2px solid var(--border-color);
-  padding: 15px 0;
-  margin-bottom: 25px;
+  padding: 10px 0;
+  margin-bottom: 15px;
   align-items: center;
   flex-wrap: wrap;
   box-sizing: border-box;
@@ -40,6 +40,7 @@
 
 .dv button:hover:not(:disabled) {
   color: #fff;
+  margin-top: 5px;
   background-color: var(--primary-red);
   border-color: var(--primary-red);
   transform: translateY(-2px);
@@ -58,6 +59,18 @@
   color: #6c757d;
   transform: none;
   box-shadow: none;
+}
+
+.dv button.uav-button {
+  background-color: var(--success-green);
+  color: #fff;
+  border-color: var(--success-green);
+}
+
+.dv button.uav-button:hover:not(:disabled) {
+  background-color: var(--success-green);
+  border-color: var(--success-green);
+  opacity: 0.9;
 }
 
 .user-menu {

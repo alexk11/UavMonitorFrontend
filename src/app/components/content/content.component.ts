@@ -22,7 +22,9 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.route.snapshot.params.msg === 'Token expired') {
+    const nav = this.router.getCurrentNavigation();
+    const state = nav?.extras.state;
+    if (state !== undefined && state['msg'] === 'Token expired') {
       this.onLogout();
     }
   }

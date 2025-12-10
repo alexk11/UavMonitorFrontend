@@ -2,9 +2,6 @@
 <p *ngIf="allTOs.length == 0">Нет данных</p>
 <div *ngIf="allTOs.length > 0" class="card" style="border: none">
   <div class="parent p-1 mb-2">
-    <div style="text-align: right">
-      <!--span class="pb-2">{{getDaysBeforeTO()}}</span-->
-    </div>
     <div *ngIf="progressbarInterval > 0" class="pt-3 pb-3">
       <span class="pb-2" style="margin-left: 5.0rem">{{getDaysBeforeTO()}}</span>
       <p-progressBar [value]="progressbarInterval"
@@ -25,10 +22,10 @@
     <ng-template #header>
       <tr>
         <th style="width:5%">№</th>
-        <th style="width:20%; text-align:center">Дата</th>
+        <th style="width:21%; text-align:center">Дата</th>
         <th style="width:15%; text-align:center">Статус</th>
         <th style="width:55%; text-align:center">Примечание</th>
-        <th style="width:5%; padding: 0">
+        <th style="width:4%; padding: 0">
           <a (click)="onAdd()" title="Добавить запись о ТО" onmouseover="" style="cursor: pointer">
             <i class="pi pi-plus-circle" style="padding: 0.4em 0 0 0.8em"></i>
           </a>

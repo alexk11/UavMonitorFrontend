@@ -1,38 +1,282 @@
-html {
-  font-size: 14px;
-}
-
+/* Основные стили для таблицы пользователей */
 .card {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  background-color: var(--bg-card);
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-gap: 10px;
-  padding: 2px;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 0 10px;
 }
 
-.grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  padding: 0 0;
-  font-size: 15px;
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: left;
+  padding-left: 10px;
+  border-left: 4px solid var(--primary-red);
 }
 
-.d-btn {
-  float: right;
-  padding-right: 10px;
+.actions-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-p-sorticon {
-  color: slategrey;
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+  font-size: 0.95rem;
 }
 
+.add-button {
+  background-color: var(--success-green);
+  color: var(--text-inverse);
+}
+
+.add-button:hover:not(:disabled) {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+}
+
+.delete-button {
+  background-color: var(--primary-red);
+  color: var(--text-inverse);
+}
+
+.delete-button:hover:not(:disabled) {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(193, 39, 39, 0.2);
+}
+
+.action-button:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Стили для PrimeNG таблицы */
+::ng-deep .p-datatable {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--secondary-dark);
+  color: var(--text-inverse);
+  font-weight: 600;
+  padding: 16px;
+  border: none;
+  border-bottom: 2px solid var(--primary-dark);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+  background-color: var(--bg-card);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--hover-light);
+}
+
+/* Zebra Striping - Even/Odd rows */
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.05);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(odd) {
+  background-color: rgba(193, 39, 39, 0.05);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
+  background-color: white;
+}
+
+::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #fff8f3;
+}
+
+::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: white;
+}
+
+/* Dark theme zebra striping */
+body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.15);
+}
+
+body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: rgba(193, 39, 39, 0.15);
+}
+
+::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+  border: 1px solid var(--border-color);
+}
+
+th.p-datatable-sortable-column:hover {
+  color: antiquewhite;
+  background-color: var(--secondary-dark) !important;
+}
+
+/* Стили для поиска в caption */
+::ng-deep .p-datatable .p-datatable-caption {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px;
+}
+
+.p-iconfield {
+  width: 300px;
+}
+
+.p-inputtext {
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 15px 10px 40px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.p-inputtext:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
+}
+
+.p-inputicon {
+  left: 12px;
+  color: var(--text-secondary);
+}
+
+/* Стили для чекбоксов */
+::ng-deep .p-checkbox .p-checkbox-box {
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+}
+
+::ng-deep .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: var(--primary-red);
+}
+
+/* Стили для пагинатора */
+::ng-deep .p-paginator {
+  background-color: var(--bg-card);
+  border: none;
+  border-top: 1px solid var(--border-color);
+  padding: 15px;
+}
+
+::ng-deep .p-paginator .p-paginator-element {
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  margin: 0 2px;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+::ng-deep .p-paginator .p-paginator-element:hover {
+  background-color: var(--hover-light);
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+}
+
+::ng-deep .p-paginator .p-paginator-element.p-highlight {
+  background-color: var(--primary-red);
+  color: var(--text-inverse);
+  border-color: var(--primary-red);
+}
+
+/* Стили для иконок статуса */
 .red {
-  color: red;
+  color: var(--primary-red);
+  transition: transform 0.2s ease;
 }
 
 .green {
-  color: green;
+  color: var(--success-green);
+  transition: transform 0.2s ease;
+}
+
+.red:hover, .green:hover {
+  transform: scale(1.1);
+}
+
+/* Стили для подсказки */
+.table-hint {
+  display: block;
+  margin-top: 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--hover-light);
+  border-radius: 6px;
+  border-left: 4px solid var(--primary-red);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .page-title {
+    text-align: center;
+    border-left: none;
+    border-bottom: 3px solid var(--primary-red);
+    padding-left: 0;
+    padding-bottom: 10px;
+  }
+
+  .actions-container {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .p-iconfield {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
 }

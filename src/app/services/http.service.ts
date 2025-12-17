@@ -16,6 +16,7 @@ import {UavFailureStep} from "../model/uav-failure-step";
 import {Router} from "@angular/router";
 import {UavInsuranceData} from "../model/uav-insurance-data";
 import {formatDate} from "@angular/common";
+import {UavEngine} from "../model/uav-engine";
 
 
 @Injectable({ providedIn: 'root' })
@@ -32,6 +33,10 @@ export class HttpService {
   //private readonly backUrl: string = 'http://localhost:8091/uav-monitor-backend';
   errorMessage: string = "";
 
+  public getUserName(): string {
+    return this.appConfig.getConfig().userName;
+  }
+
   private getAuthToken(): string | null {
     return this.appConfig.getConfig().authToken;
   }
@@ -39,9 +44,11 @@ export class HttpService {
   setAuthParams(data: any): void {
     if (data !== null) {
       this.appConfig.getConfig().authToken = data.token !== null ? data.token : '';
+      this.appConfig.getConfig().userName = data.login !== null ? data.login : '';
       this.appConfig.getConfig().userRole = data.role !== null ? data.role : '';
     } else {
       this.appConfig.getConfig().authToken = '';
+      this.appConfig.getConfig().userName = '';
       this.appConfig.getConfig().userRole = '';
     }
   }
@@ -283,6 +290,37 @@ export class HttpService {
       );
   }
 
+  //// Engine resource
+  getUavTOInfo(uavId: string): Observable<UavEngine[]> {
+    this.errorMessage = '';
+    const url = `${this.backUrl}/getUavTOInfo/${uavId}`;
+    return this.http.get<UavEngine[]>(url, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.messageService.add(`Got TO data from DB for='${uavId}'`)),
+            catchError(this.handleError<UavEngine[]>(`getUavTOs id=${uavId}`))
+        );
+  }
+
+  saveUavTOInfo(data: UavEngine): Observable<UavEngine> {
+    this.errorMessage = '';
+    const url = `${this.backUrl}/saveUavTOInfo`;
+    return this.http.post<UavEngine>(url, data, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.messageService.add(`Posted UavEngine info`)),
+            catchError(this.handleError<UavEngine>(`saveUavEngine info`))
+        );
+  }
+
+  /** DELETE: delete UavEngine info on the server */
+  deleteUavTOInfo(data: UavEngine): Observable<any> {
+    this.errorMessage = '';
+    return this.http.request('DELETE', `${this.backUrl}/deleteUavTOInfo`, { headers: this.getAuthHeader(), body: data })
+        .pipe(
+            tap(_ => this.messageService.add("UavTOInfo deleted.")),
+            catchError(this.handleError<UavEngine>('deleteUavTOInfo'))
+        );
+  }
+
   // downloadImages(uavId: string): Observable<Blob[]> {
   //   this.errorMessage = '';
   //   const url = `${this.backUrl}/downloadImages/${uavId}`;
@@ -416,7 +454,8 @@ export class HttpService {
       console.error(err);
       this.messageService.add(`${operation} failed: ${err.error.message}`);
       // Error message to be displayed in the calling component
-      this.errorMessage = `Ошибка: ${err.error.message}`;
+      //this.errorMessage = `Ошибка: ${err.error.message}`;
+      this.errorMessage = `Ошибка: ${err.message}`;
       // Auth token expired, navigate to login page
       if (err.status == 401 && err.error.message === 'Unauthorized path') {
         this.router.navigate(['content'],

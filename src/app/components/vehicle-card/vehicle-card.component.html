@@ -10,10 +10,11 @@
       <p-tab value="0">Информация</p-tab>
       <p-tab value="1">СЛГ</p-tab>
       <p-tab value="2">Акт оценки</p-tab>
-      <p-tab value="3">ТО</p-tab>
-      <p-tab value="4">Страхование</p-tab>
-      <p-tab value="5">Фото</p-tab>
-      <p-tab value="6">Перечень отказов</p-tab>
+      <p-tab value="3">Ресурс двигателя</p-tab>
+      <p-tab value="4">ТО</p-tab>
+      <p-tab value="5">Страхование</p-tab>
+      <p-tab value="6">Фото</p-tab>
+      <p-tab value="7">Перечень отказов</p-tab>
     </p-tablist>
     <p-tabpanels class="mb-0" style="padding-bottom: 0; padding-right: 0">
       <p-tabpanel value="0">
@@ -79,18 +80,22 @@
       </p-tabpanel>
       <p-tabpanel value="3">
         <!--ng-template pTemplate="content"-->
-        <app-vehicle-to [uav]="uavInfo"/>
+        <!--app-vehicle-to [uav]="uavInfo"/-->
+        <app-vehicle-engine [uav]="uavInfo"/>
         <!--/ng-template-->
       </p-tabpanel>
       <p-tabpanel value="4">
-        <app-vehicle-insurance [uav]="uavInfo"/>
+        <app-vehicle-to [uav]="uavInfo"/>
       </p-tabpanel>
       <p-tabpanel value="5">
+        <app-vehicle-insurance [uav]="uavInfo"/>
+      </p-tabpanel>
+      <p-tabpanel value="6">
         <p class="m-0">
           <app-image-gallery [uav]="uavInfo"/>
         </p>
       </p-tabpanel>
-      <p-tabpanel value="6">
+      <p-tabpanel value="7">
         <app-vehicle-failure [uav]="uavInfo"/>
       </p-tabpanel>
     </p-tabpanels>

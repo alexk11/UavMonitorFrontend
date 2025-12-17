@@ -32,6 +32,7 @@ import {ImageGalleryComponent} from "./components/image-gallery/image-gallery.co
 import {AddVehicleComponent} from "./components/add-vehicle/add-vehicle.component";
 import {ActivityComponent} from "./components/activity/activity.component";
 import {VehicleToComponent} from "./components/vehicle-to/vehicle-to.component";
+import {VehicleEngineComponent} from "./components/vehicle-engine/vehicle-engine.component";
 import {InfoDialogComponent} from "./components/info-dialog/info-dialog.component";
 import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-failure.component";
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
@@ -69,6 +70,7 @@ import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-
     ImageGalleryComponent,
     ActivityComponent,
     VehicleToComponent,
+    VehicleEngineComponent,
     VehicleFailureComponent,
     VehicleInsuranceComponent,
     FailureHistoryComponent,

@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 export interface AppConfig {
   backUrl: string;
   authToken: string;
+  userName: string;
   userRole: string;
   enabled: boolean;
 }
@@ -10,7 +11,7 @@ export interface AppConfig {
 @Injectable()
 export class AppConfigService {
 
-  private config: AppConfig = {authToken: "", backUrl: "", userRole: "", enabled: false};
+  private config: AppConfig = {authToken: "", backUrl: "", userName: "", userRole: "", enabled: false};
 
   public initialize() {
     this.config.backUrl = "http://localhost:8080";

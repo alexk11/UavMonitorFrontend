@@ -1,18 +1,17 @@
-<h5 style="text-align: center; color: #A80000">Интервалы работы двигателя</h5>
 <p *ngIf="allRecords.length == 0">Нет данных</p>
 <div *ngIf="allRecords.length > 0" class="card" style="border: none">
-    <div class="parent p-1 mb-2">
-        <div *ngIf="progressbarInterval > 0" class="pt-3 pb-3">
-            <span class="pb-2" style="margin-left: 5.0rem">{{getDaysBeforeTO()}}</span>
-            <p-progressBar [value]="progressbarInterval"
-                           [style]="{'background-color': getBarColor(), 'border-width': 0}"
-                           [pTooltip]="getDaysBeforeTO()">
-                <ng-template #content let-value>
-                    <span style="color: black; font-weight: bolder; font-size: larger">{{value}}</span>
-                </ng-template>
-            </p-progressBar>
+    <div class="parent p-1 mb-3">
+        <div class="engine-to-stripe">
+            <h5 class="title">Интервалы работы двигателя</h5>
+            <div *ngIf="timeTillNearestEngineTO" class="time-left-display" [ngClass]="getSeverityClass()">
+                <div class="time-left-label">{{ getTimeLeftText() }}</div>
+            </div>
+            <div *ngIf="!timeTillNearestEngineTO" class="alert alert-info">
+                Дата ближайшего ТО не установлена
+            </div>
         </div>
     </div>
+
     <p-table [value]="allRecords"
              dataKey="id"
              editMode="row"
@@ -24,7 +23,7 @@
                 <th style="width:5%">№</th>
                 <th style="width:15%; text-align:center">Старт</th>
                 <th style="width:15%; text-align:center">Стоп</th>
-                <th style="width:10%; text-align:center">Кол-во часов работы</th>
+                <th style="width:10%; text-align:center">Длительность</th>
                 <th style="width:20%; text-align:center">Кем добавлено</th>
                 <th style="width:10%; text-align:center">Когда добавлено</th>
                 <th style="width:11%; text-align:center">Примечание</th>
@@ -165,7 +164,7 @@
                             pButton
                             pRipple
                             type="button"
-                            title="Удалить запись о ТО"
+                            title="Удалить запись о работе двигателя"
                             pCancelEditableRow
                             icon="pi pi-trash"
                             (click)="onRowRemove(TO, ri)"
@@ -184,7 +183,7 @@
         <button class="btn btn-primary m-1"
                 type="button"
                 (click)="onAdd()"
-                title="Добавить запись о ТО">
+                title="Добавить запись о времени работы двигателя">
             Добавить
         </button>
     </div>

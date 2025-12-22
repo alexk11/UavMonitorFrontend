@@ -14,6 +14,7 @@
 
 h4.title {
   text-align: left;
-  color: #A80000;
+  color: var(--text-primary);
   font-size: large;
+  border-left: 4px solid var(--primary-red);
 }

@@ -1,24 +1,25 @@
 .parent {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     gap: 1rem;
 }
 
-.engine-to-stripe {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.0rem 0 0 0;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: none; /*1px solid #dee2e6;*/
-}
+/*!*.engine-to-stripe {*!*/
+/*!*    display: flex;*!*/
+/*!*    align-items: center;*!*/
+/*!*    gap: 2rem;*!*/
+/*!*    padding: 1.0rem 0 0 0;*!*/
+/*!*    background-color: #f8f9fa;*!*/
+/*!*    border-radius: 8px;*!*/
+/*!*    border: none; !*1px solid #dee2e6;*!*!*/
+/*!*}*!*/
 
 .time-left-display {
     float: right;
     flex: 0 0 auto;
     min-width: 200px;
-    padding: 1.5rem;
+    padding: 0.7rem;
     border-radius: 8px;
     text-align: center;
     font-weight: bold;
@@ -53,8 +54,55 @@
 }
 
 h5.title {
-    margin-top: 1.0em;
+    margin-top: 0.5em;
     padding-left: 10px;
     color: var(--text-primary);
-    border-left: 4px solid var(--primary-red);
+    border-left: 3px solid var(--primary-red);
 }
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(even) {
+    background-color: rgba(180, 180, 180, 0.1);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(odd) {
+    background-color: rgba(240, 240, 240, 0.1);
+}
+
+/* Стили для поиска и фильтров */
+.search-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr) fit-content(30%);
+    /*justify-content: flex-start;*/
+    /*align-items: center;*/
+    margin-bottom: 10px;
+}
+
+/*::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {*/
+/*    background-color: white;*/
+/*}*/
+
+/*::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {*/
+/*    background-color: #fff8f3;*/
+/*}*/
+
+/*::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {*/
+/*    background-color: white;*/
+/*}*/
+
+/*:host ::ng-deep.p-datatable-table tr:nth-child(even){*/
+/*    background-color: #000;*/
+/*}*/
+
+/* Target the table rows within the specific table class */
+/*::ng-deep .zebra .p-datatable-tbody > tr:nth-child(odd) {*/
+/*    background-color: lawngreen; !* Light grey for odd rows *!*/
+/*}*/
+
+/*::ng-deep .zebra .p-datatable-tbody > tr:nth-child(even) {*/
+/*    background-color: yellow; !* White for even rows *!*/
+/*}*/
+
+/*!* Optional: Ensure hover and selection styles still work correctly *!*/
+/*::ng-deep .zebra .p-datatable-tbody > tr.p-datatable-selectable-row:hover {*/
+/*    background-color: red; !* Hover color *!*/
+/*}*/

@@ -38,7 +38,6 @@ export class VehicleToComponent implements OnInit {
       //{ label: 'Ошибки', value: 'ОШИБКИ' },
       { label: 'Неизвестно', value: 'НЕИЗВЕСТНО' }
     ];
-
     if (this.uav !== null) {
       this.getTOInfo();
     }

@@ -291,33 +291,33 @@ export class HttpService {
   }
 
   //// Engine resource
-  getUavTOInfo(uavId: string): Observable<UavEngine[]> {
+  getUavEngineInfo(uavId: string): Observable<UavEngine[]> {
     this.errorMessage = '';
     const url = `${this.backUrl}/getUavTOInfo/${uavId}`;
     return this.http.get<UavEngine[]>(url, { headers: this.getAuthHeader() })
         .pipe(
             tap(_ => this.messageService.add(`Got TO data from DB for='${uavId}'`)),
-            catchError(this.handleError<UavEngine[]>(`getUavTOs id=${uavId}`))
+            catchError(this.handleError<UavEngine[]>(`getUavEngineInfo id=${uavId}`))
         );
   }
 
-  saveUavTOInfo(data: UavEngine): Observable<UavEngine> {
+  saveUavEngineInfo(data: UavEngine): Observable<UavEngine> {
     this.errorMessage = '';
     const url = `${this.backUrl}/saveUavTOInfo`;
     return this.http.post<UavEngine>(url, data, { headers: this.getAuthHeader() })
         .pipe(
             tap(_ => this.messageService.add(`Posted UavEngine info`)),
-            catchError(this.handleError<UavEngine>(`saveUavEngine info`))
+            catchError(this.handleError<UavEngine>(`saveUavEngineInfo info`))
         );
   }
 
   /** DELETE: delete UavEngine info on the server */
-  deleteUavTOInfo(data: UavEngine): Observable<any> {
+  deleteUavEngineInfo(data: UavEngine): Observable<any> {
     this.errorMessage = '';
     return this.http.request('DELETE', `${this.backUrl}/deleteUavTOInfo`, { headers: this.getAuthHeader(), body: data })
         .pipe(
-            tap(_ => this.messageService.add("UavTOInfo deleted.")),
-            catchError(this.handleError<UavEngine>('deleteUavTOInfo'))
+            tap(_ => this.messageService.add("UavEngineInfo deleted.")),
+            catchError(this.handleError<UavEngine>('deleteUavEngineInfo'))
         );
   }
 

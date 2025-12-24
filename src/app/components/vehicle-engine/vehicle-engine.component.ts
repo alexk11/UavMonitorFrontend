@@ -4,6 +4,7 @@ import {UavEngine} from "../../model/uav-engine";
 import {HttpService} from "../../services/http.service";
 import {formatDate} from "@angular/common";
 
+
 @Component({
   selector: 'app-vehicle-engine',
   templateUrl: './vehicle-engine.component.html',
@@ -20,6 +21,9 @@ export class VehicleEngineComponent implements OnInit {
   date!: Date;
   progressbarInterval: number = 0
 
+  first = 0;
+  rows = 10;
+
   minutesTillNearestEngineTO: number = 0; //
   timeTillNearestEngineTO: string = ''; // in format hh, min
 
@@ -27,14 +31,20 @@ export class VehicleEngineComponent implements OnInit {
 
   ngOnInit() {
     if (this.uav !== null) {
-      this.getTOData();
+      this.getEngineData();
     }
   }
 
-  private getTOData(): void {
-    this.httpService.getUavTOInfo(this.uav.uavId).subscribe((data: UavEngine[]) => {
+  private getEngineData(): void {
+    this.httpService.getUavEngineInfo(this.uav.uavId).subscribe((data: UavEngine[]) => {
       this.allRecords = data;
-      data.forEach(val => this.shallow.push(Object.assign({}, val)));
+      data.forEach(val => {
+        val.engineActiveFrom = this.formatDateCustom(val.engineActiveFrom);
+        val.engineActiveTill = this.formatDateCustom(val.engineActiveTill);
+        val.reportedTimestamp = this.formatDateCustom(val.reportedTimestamp);
+        this.shallow.push(Object.assign({}, val))
+      });
+      //data.forEach(val => this.shallow.push(Object.assign({}, val)));
       this.enumerateTOs();
       this.timeTillNearestEngineTO = this.calculateTimeTillTO(data);
       //this.getProgressBarInterval();
@@ -74,6 +84,22 @@ export class VehicleEngineComponent implements OnInit {
     return parseInt(tokens[0], 10)*60 + parseInt(tokens[2], 10);
   }
 
+  private formatDateCustom(input: string): string {
+    //input example = "11.10.2015 10:00";
+    const [datePart, timePart] = input.split(" ");
+    let [dd, mm, yy] = datePart.split(".");
+    let [hh, mn] = timePart.split(":");
+
+    yy = String(Number(yy) % 100);
+
+    // Pad with leading zeros if single digit
+    dd = dd.padStart(2, '0');
+    mm = mm.padStart(2, '0');
+    yy = yy.padStart(2, '0');
+
+    return `${dd}.${mm}.${yy} ${hh}:${mn}`;
+  }
+
   // private getProgressBarInterval(): void {
   //   let now = new Date();
   //   let differenceInMs = 0;
@@ -110,11 +136,15 @@ export class VehicleEngineComponent implements OnInit {
     uavEngine.engineOperateDuration = this.calculateInterval(uavEngine.engineActiveFrom, uavEngine.engineActiveTill);
     uavEngine.reporter = this.httpService.getUserName();
     uavEngine.reportedTimestamp = formatDate(new Date(), 'dd.MM.yy HH:mm', 'en-US'); //this.toIsoDateString(formatDate(new Date(), 'yyyy-MM-dd HH:mm', 'en-US'));
-    this.httpService.saveUavTOInfo(uavEngine).subscribe((data: UavEngine) => {
+    this.httpService.saveUavEngineInfo(uavEngine).subscribe((data: UavEngine) => {
       if (data !== null) {
-        this.getTOData();
+        this.getEngineData();
       }
     });
+  }
+
+  private formatDate(date: Date) {
+
   }
 
   private calculateInterval(startDate: string, endDate: string): string {
@@ -147,18 +177,18 @@ export class VehicleEngineComponent implements OnInit {
     }
     if (this.minutesTillNearestEngineTO < 0) {
       return 'status-expired';
-    } else if (this.minutesTillNearestEngineTO < 10) {
+    } else if (this.minutesTillNearestEngineTO < 600) {
       return 'status-critical';
-    } else if (this.minutesTillNearestEngineTO >= 10 && this.minutesTillNearestEngineTO < 30) {
+    } else if (this.minutesTillNearestEngineTO >= 600 && this.minutesTillNearestEngineTO < 1800) {
       return 'status-warning';
-    } else if (this.minutesTillNearestEngineTO >= 30 && this.minutesTillNearestEngineTO < 40) {
+    } else if (this.minutesTillNearestEngineTO >= 1800 && this.minutesTillNearestEngineTO < 2400) {
       return 'status-attention';
     }
     return 'status-good';
   }
 
   getTimeLeftText(): string {
-    return 'До ближайшего ТО: ' + this.timeTillNearestEngineTO;
+    return 'До ближайшего ТО двигателя:  ' + this.timeTillNearestEngineTO;
   }
 
   onRowEditInit(uavEngine: UavEngine) {
@@ -176,8 +206,8 @@ export class VehicleEngineComponent implements OnInit {
   onRowRemove(uavEngine: UavEngine, index: number) {
     uavEngine.uavId = this.uav.uavId;
     //uavEngine.inspectionDate = this.convertDateString(uavEngine.inspectionDate);
-    this.httpService.deleteUavTOInfo(uavEngine).subscribe(() => {
-      this.getTOData();
+    this.httpService.deleteUavEngineInfo(uavEngine).subscribe(() => {
+      this.getEngineData();
     });
   }
 
@@ -242,6 +272,23 @@ export class VehicleEngineComponent implements OnInit {
       msg += ' дней';
     }
     return msg;
+  }
+
+  applyFilter(event: Event): void {
+    // this.enumerateUsers(this.allUsers);
+    // const filterValue = (event.target as HTMLInputElement).value;
+    // if (filterValue.length == 0) {
+    //   this.displayedUsers = this.allUsers;
+    //   return;
+    // }
+    // let filteredUsers: User[] = [];
+    // for (let u of this.allUsers) {
+    //   if (this.containsFilterVal(u, filterValue)) {
+    //     filteredUsers.push(u as User);
+    //   }
+    // }
+    // this.enumerateUsers(filteredUsers);
+    // this.displayedUsers = filteredUsers;
   }
 
 }

@@ -17,12 +17,6 @@
   padding-right: 10px;
 }
 
-h4 {
-  border-bottom-style: double;
-  border-bottom-color: lightgray;
-  padding-bottom: 0.2em;
-}
-
 .parent {
   display: grid;
   grid-template-columns: repeat(1, 1fr) fit-content(20%);
@@ -41,6 +35,18 @@ h4 {
 
 .btn-row {
   grid-row-start: 3;
+}
+
+h4.title {
+  padding-left: 10px;
+  color: var(--text-primary);
+  border-left: 4px solid var(--primary-red);
+}
+
+.p-tabs {
+  border-top-style: double;
+  border-top-color: lightgray;
+  padding-top: 0.2em;
 }
 
 /*::ng-deep .p-tablist-tab-list {*/

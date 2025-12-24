@@ -1,8 +1,21 @@
 <p *ngIf="allRecords.length == 0">Нет данных</p>
 <div *ngIf="allRecords.length > 0" class="card" style="border: none">
-    <div class="parent p-1 mb-3">
-        <div class="engine-to-stripe">
-            <h5 class="title">Интервалы работы двигателя</h5>
+    <div class="parent p-1 mb-1">
+        <h5 class="title">Интервалы работы двигателя</h5>
+    </div>
+
+    <div class="search-container">
+        <p-iconfield iconPosition="left">
+            <p-inputicon>
+                <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input
+                pInputText type="text"
+                (input)="applyFilter($event)"
+                (keyup)="applyFilter($event)"
+                placeholder="Поиск в таблице" />
+        </p-iconfield>
+        <div style="float: right">
             <div *ngIf="timeTillNearestEngineTO" class="time-left-display" [ngClass]="getSeverityClass()">
                 <div class="time-left-label">{{ getTimeLeftText() }}</div>
             </div>
@@ -17,39 +30,44 @@
              editMode="row"
              showGridlines
              stripedRows
-             [tableStyle]="{'min-width': '50rem'}">
+             [rows]="rows"
+             [first]="first"
+             [paginator]="true"
+             [showCurrentPageReport]="true"
+             [tableStyle]="{ 'min-width': '50rem' }"
+             currentPageReportTemplate="Показаны {first}-{last} из {totalRecords} записей">
         <ng-template #header>
             <tr>
-                <th style="width:5%">№</th>
+                <th style="width:3%">№</th>
                 <th style="width:15%; text-align:center">Старт</th>
                 <th style="width:15%; text-align:center">Стоп</th>
                 <th style="width:10%; text-align:center">Длительность</th>
-                <th style="width:20%; text-align:center">Кем добавлено</th>
-                <th style="width:10%; text-align:center">Когда добавлено</th>
-                <th style="width:11%; text-align:center">Примечание</th>
-                <th style="width:4%; padding: 0">
+                <th style="width:15%; text-align:center">Кем добавлено</th>
+                <th style="width:12%; text-align:center">Когда добавлено</th>
+                <th style="width:27%; text-align:center">Примечание</th>
+                <th style="width:3%; padding: 0">
                     <a (click)="onAdd()" title="Добавить запись о ТО" onmouseover="" style="cursor: pointer">
                         <i class="pi pi-plus-circle" style="padding: 0.4em 0 0 0.8em"></i>
                     </a>
                 </th>
             </tr>
         </ng-template>
-        <ng-template #body let-TO let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="TO">
+        <ng-template #body let-item let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="item">
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            {{TO.id}}
+                            {{item.id}}
                         </ng-template>
                         <ng-template #output>
-                            {{TO.id}}
+                            {{item.id}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td style="text-align: center">
                     <p-cellEditor>
                         <ng-template #input>
-                            <p-datePicker [(ngModel)]="TO.engineActiveFrom"
+                            <p-datePicker [(ngModel)]="item.engineActiveFrom"
                                           [showTime]="true"
                                           required
                                           appendTo="body"
@@ -58,14 +76,14 @@
                             </p-datePicker>
                         </ng-template>
                         <ng-template #output>
-                            {{TO.engineActiveFrom}}
+                            {{item.engineActiveFrom}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td style="text-align: center">
                     <p-cellEditor>
                         <ng-template #input>
-                            <p-datePicker [(ngModel)]="TO.engineActiveTill"
+                            <p-datePicker [(ngModel)]="item.engineActiveTill"
                                           [showTime]="true"
                                           required
                                           appendTo="body"
@@ -74,48 +92,48 @@
                             </p-datePicker>
                         </ng-template>
                         <ng-template #output>
-                            {{TO.engineActiveTill}}
+                            {{item.engineActiveTill}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            {{TO.engineOperateDuration}}
+                            {{item.engineOperateDuration}}
                         </ng-template>
                         <ng-template *ngIf="!editing" #output>
-                            {{TO.engineOperateDuration}}
+                            {{item.engineOperateDuration}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            {{TO.reporter}}
-                            <input [(ngModel)]="TO.reporter" pInputText/>
+                            {{item.reporter}}
+                            <input [(ngModel)]="item.reporter" pInputText/>
                         </ng-template>
                         <ng-template *ngIf="!editing" #output>
-                            {{TO.reporter}}
+                            {{item.reporter}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            {{TO.reportedTimestamp}}
+                            {{item.reportedTimestamp}}
                         </ng-template>
                         <ng-template *ngIf="!editing" #output>
-                            {{TO.reportedTimestamp}}
+                            {{item.reportedTimestamp}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            <textarea rows="4" cols="50" [(ngModel)]="TO.note" pTextarea></textarea>
+                            <textarea rows="4" cols="50" [(ngModel)]="item.note" pTextarea></textarea>
                         </ng-template>
                         <ng-template #output>
-                            {{TO.note}}
+                            {{item.note}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
@@ -141,7 +159,7 @@
                             title="Сохранить изменения"
                             pSaveEditableRow
                             icon="pi pi-check"
-                            (click)="onRowEditSave(TO)"
+                            (click)="onRowEditSave(item)"
                             text
                             rounded
                             severity="secondary"
@@ -167,7 +185,7 @@
                             title="Удалить запись о работе двигателя"
                             pCancelEditableRow
                             icon="pi pi-trash"
-                            (click)="onRowRemove(TO, ri)"
+                            (click)="onRowRemove(item, ri)"
                             text
                             rounded
                             severity="secondary"

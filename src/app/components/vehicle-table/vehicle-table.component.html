@@ -53,7 +53,6 @@
     showGridlines
     stripedRows
     [paginator]="true"
-    [rowsPerPageOptions]="[5, 10, 20]"
     [rows]="rows"
     [first]="first"
     [(selection)]="selectedVehicles"
@@ -93,34 +92,65 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template #body let-rowData let-columns="columns">
-      <tr (dblclick)="onUavRowDoubleClick(rowData)" class="clickable-row">
-        <td *ngFor="let col of columns">
-          <ng-container *ngIf="col.field !== 'description'">
-            {{ rowData[col.field] }}
-          </ng-container>
-          <ng-container *ngIf="col.field === 'description'">
-            <p-cellEditor>
-              <ng-template #input>
-                <input
-                  pInputText
-                  type="text"
-                  [(ngModel)]="rowData[col.field]"
-                  (blur)="onDescriptionEdit(rowData)"
-                  class="editable-input" />
-              </ng-template>
-              <ng-template #output>
-                <span class="editable-field" title="Нажмите для редактирования">
-                  {{ rowData[col.field] }}
-                </span>
-              </ng-template>
-            </p-cellEditor>
-          </ng-container>
-        </td>
-        <td style="text-align: center">
-          <p-tableCheckbox [value]="rowData" />
-        </td>
-      </tr>
+    <ng-template #body let-vehicle>
+        <tr (dblclick)="onUavRowDoubleClick(vehicle)" class="clickable-row">
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        {{vehicle.id}}
+                    </ng-template>
+                    <ng-template #output>
+                        {{vehicle.id}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        {{vehicle.type}}
+                    </ng-template>
+                    <ng-template #output>
+                        {{vehicle.type}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        {{vehicle.vehicleId}}
+                    </ng-template>
+                    <ng-template #output>
+                        {{vehicle.vehicleId}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor (click)="onUavRowClick(vehicle)">
+                    <ng-template #input>
+                        <!--input
+                            pInputText
+                            type="text"
+                            [(ngModel)]="vehicle.description"
+                            (blur)="onDescriptionEdit(vehicle)"
+                            class="editable-input" /-->
+                        <textarea pTextarea
+                                  rows="3" cols="40"
+                                  (clickOutside)="editMode = false"
+                                  (blur)="onDescriptionEdit(vehicle)"
+                                  [(ngModel)]="vehicle.description">
+                        </textarea>
+                    </ng-template>
+                    <ng-template *ngIf="!editMode" #output>
+                        <span class="editable-field" title="Нажмите для редактирования">
+                            {{ vehicle.description }}
+                        </span>
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td style="text-align: center">
+                <p-tableCheckbox [value]="vehicle" />
+            </td>
+        </tr>
     </ng-template>
     <ng-template #emptymessage>
       <tr>
@@ -131,8 +161,7 @@
       </tr>
     </ng-template>
   </p-table>
+  <p class="table-hint">
+     * Нажмите дважды на строку в таблице для просмотра или редактирования профиля БВС. Нажмите на поле "Описание" для быстрого редактирования.
+  </p>
 </div>
-
-<p class="table-hint">
-  * Нажмите дважды на строку в таблице для просмотра или редактирования профиля БВС. Нажмите на поле "Описание" для быстрого редактирования.
-</p>

@@ -13,10 +13,13 @@ export class VehicleTableComponent implements OnInit {
 
   allVehicles: Vehicle[] = [];
   displayedVehicles: Vehicle[] = [];
+  shallow: Vehicle[] = [];
 
   selectedVehicles: Vehicle[] = [];
   message: string = 'Действительно удалить?';
   dialogVisible: boolean = false;
+
+  editMode: boolean = false;
 
   // Type filter
   selectedType: string | null = null;
@@ -49,6 +52,7 @@ export class VehicleTableComponent implements OnInit {
       this.enumerateVehicles(data);
       this.allVehicles = data;
       this.displayedVehicles = data;
+      data.forEach(val => this.shallow.push(Object.assign({}, val)));
       this.extractVehicleTypes();
     });
   }
@@ -101,6 +105,13 @@ export class VehicleTableComponent implements OnInit {
     return v.type.includes(val) || v.vehicleId.includes(val) || v.description.includes(val);
   }
 
+  onUavRowClick(rowData: any): void {
+    const description = rowData.description;
+    if (description) {
+      this.editMode = !this.editMode;
+    }
+  }
+
   onUavRowDoubleClick(rowData: any): void {
     const id = rowData.vehicleId;
     if (id !== undefined) {
@@ -134,10 +145,15 @@ export class VehicleTableComponent implements OnInit {
   }
 
   onDescriptionEdit(vehicle: Vehicle): void {
+    const origDescr = this.shallow.find(v => v.vehicleId === vehicle.vehicleId);
+    if (origDescr && origDescr.description === vehicle.description) {
+      return;
+    }
     this.httpService.updateVehicle(vehicle).subscribe(() => {
       // Vehicle updated successfully
       console.log('Vehicle description updated');
     });
+    this.editMode = false;
   }
 
   next() {

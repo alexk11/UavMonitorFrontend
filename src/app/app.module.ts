@@ -37,6 +37,7 @@ import {InfoDialogComponent} from "./components/info-dialog/info-dialog.componen
 import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-failure.component";
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
 import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-insurance.component";
+import {ClickOutsideDirective} from "./directives/click-outside";
 
 
 @NgModule({
@@ -49,8 +50,7 @@ import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-
     AppPrimengModule,
     AppCoreUIModule,
     DropdownModule,
-    NgbModule,
-    //InputSwitch
+    NgbModule
   ],
   declarations: [
     AppComponent,
@@ -74,7 +74,8 @@ import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-
     VehicleFailureComponent,
     VehicleInsuranceComponent,
     FailureHistoryComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    ClickOutsideDirective
   ],
   bootstrap: [ AppComponent ],
   providers: [

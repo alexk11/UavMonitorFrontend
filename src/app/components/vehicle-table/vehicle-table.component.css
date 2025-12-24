@@ -97,24 +97,24 @@
   transition: all 0.3s ease;
 }
 
-::ng-deep .type-dropdown .p-dropdown:not(.p-disabled):hover {
-  border-color: var(--primary-red);
-}
+/*::ng-deep .type-dropdown .p-dropdown:not(.p-disabled):hover {*/
+/*  border-color: var(--primary-red);*/
+/*}*/
 
-::ng-deep .type-dropdown .p-dropdown:not(.p-disabled).p-focus {
-  outline: none;
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
-}
+/*::ng-deep .type-dropdown .p-dropdown:not(.p-disabled).p-focus {*/
+/*  outline: none;*/
+/*  border-color: var(--primary-red);*/
+/*  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);*/
+/*}*/
 
-::ng-deep .type-dropdown .p-dropdown-label {
-  color: var(--text-primary);
-  padding: 10px 15px;
-}
+/*::ng-deep .type-dropdown .p-dropdown-label {*/
+/*  color: var(--text-primary);*/
+/*  padding: 10px 15px;*/
+/*}*/
 
-::ng-deep .type-dropdown .p-dropdown-trigger {
-  color: var(--text-secondary);
-}
+/*::ng-deep .type-dropdown .p-dropdown-trigger {*/
+/*  color: var(--text-secondary);*/
+/*}*/
 
 .p-iconfield {
   width: 300px;
@@ -177,32 +177,41 @@ th.p-datatable-sortable-column:hover {
   border-color: var(--primary-red);
 }
 
-::ng-deep .p-paginator {
-  background-color: var(--bg-card);
-  border: none;
-  border-top: 1px solid var(--border-color);
-  padding: 15px;
-}
+/*::ng-deep .p-paginator .p-select-dropdown .p-select-list .p-select-list-item {*/
+/*  z-index: 1001 !important;*/
+/*  overflow: visible !important;*/
+/*}*/
 
-::ng-deep .p-paginator .p-paginator-element {
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  margin: 0 2px;
-  color: var(--text-primary);
-  background-color: var(--bg-secondary);
-}
+/*::ng-deep .p-paginator {*/
+/*  overflow: visible;*/
+/*}*/
 
-::ng-deep .p-paginator .p-paginator-element:hover {
-  background-color: var(--hover-light);
-  border-color: var(--primary-red);
-  color: var(--primary-red);
-}
+/*!*::ng-deep .p-paginator {*!*/
+/*!*  background-color: var(--bg-card);*!*/
+/*!*  border: none;*!*/
+/*!*  border-top: 1px solid var(--border-color);*!*/
+/*!*  padding: 15px;*!*/
+/*!*}*!*/
 
-::ng-deep .p-paginator .p-paginator-element.p-highlight {
-  background-color: var(--primary-red);
-  color: var(--text-inverse);
-  border-color: var(--primary-red);
-}
+/*!*::ng-deep .p-paginator .p-paginator-element {*!*/
+/*!*  border-radius: 6px;*!*/
+/*!*  border: 1px solid var(--border-color);*!*/
+/*!*  margin: 0 2px;*!*/
+/*!*  color: var(--text-primary);*!*/
+/*!*  background-color: var(--bg-secondary);*!*/
+/*!*}*!*/
+
+/*!*::ng-deep .p-paginator .p-paginator-element:hover {*!*/
+/*!*  background-color: var(--hover-light);*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*  color: var(--primary-red);*!*/
+/*!*}*!*/
+
+/*!*::ng-deep .p-paginator .p-paginator-element.p-highlight {*!*/
+/*!*  background-color: var(--primary-red);*!*/
+/*!*  color: var(--text-inverse);*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*}*!*/
 
 /* Стили для редактируемого поля */
 .editable-field {
@@ -215,33 +224,32 @@ th.p-datatable-sortable-column:hover {
 }
 
 .editable-field:hover {
-  background-color: rgba(193, 39, 39, 0.1);
+  background-color: lightgray; /*rgba(193, 39, 39, 0.1);*/
 }
 
-.editable-input {
-  width: 100%;
-  padding: 6px 10px;
-  border: 1px solid var(--primary-red);
-  border-radius: 4px;
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-}
+/*!*.editable-input {*!*/
+/*!*  width: 100%;*!*/
+/*!*  padding: 6px 10px;*!*/
+/*!*  border: 1px solid var(--primary-red);*!*/
+/*!*  border-radius: 4px;*!*/
+/*!*  background-color: var(--bg-secondary);*!*/
+/*!*  color: var(--text-primary);*!*/
+/*!*}*!*/
 
-.editable-input:focus {
-  outline: none;
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 2px rgba(193, 39, 39, 0.2);
-}
+/*!*.editable-input:focus {*!*/
+/*!*  outline: none;*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*  box-shadow: 0 0 0 2px rgba(193, 39, 39, 0.2);*!*/
+/*!*}*!*/
 
 /* Стили для двойного клика */
 .table-hint {
   display: block;
-  margin-top: 20px;
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-style: italic;
   text-align: center;
-  padding: 10px;
+  padding: 0;
   background-color: var(--hover-light);
   border-radius: 6px;
   border-left: 4px solid var(--primary-red);

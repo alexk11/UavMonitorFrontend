@@ -1,10 +1,5 @@
 <div class="card" *ngIf="uavInfo">
-  <h4 style="text-align: center; color: #A80000">БВС "{{uavInfo.uavId}}"</h4>
-  <app-info-dialog
-    [message]="message"
-    [display]="dialogVisible"
-    (confirm)="dialogVisible=false">
-  </app-info-dialog>
+  <h4 class="title">БВС "{{uavInfo.uavId}}"</h4>
   <p-tabs [(value)]="activeTab">
     <p-tablist>
       <p-tab value="0">Информация</p-tab>
@@ -110,3 +105,8 @@
     Назад
   </button>
 </div>
+<app-info-dialog
+        [message]="message"
+        [display]="dialogVisible"
+        (confirm)="dialogVisible=false">
+</app-info-dialog>

@@ -26,10 +26,10 @@ export class VehicleTableComponent implements OnInit {
   vehicleTypes: { label: string; value: string | null }[] = [];
   currentSearchValue: string = '';
 
-  // Description editor
-  editDialogVisible: boolean = false;
-  editingVehicle: Vehicle | null = null;
-  editedDescription: string = '';
+  // // Description editor
+  // editDialogVisible: boolean = false;
+  // editingVehicle: Vehicle | null = null;
+  // editedDescription: string = '';
 
   cols = [
     { field: 'id', header: 'Id' },
@@ -145,12 +145,11 @@ export class VehicleTableComponent implements OnInit {
   }
 
   onDescriptionEdit(vehicle: Vehicle): void {
-    const origDescr = this.shallow.find(v => v.vehicleId === vehicle.vehicleId);
-    if (origDescr && origDescr.description === vehicle.description) {
+    const orig = this.shallow.find(v => v.vehicleId === vehicle.vehicleId);
+    if (orig && orig.description === vehicle.description) {
       return;
     }
     this.httpService.updateVehicle(vehicle).subscribe(() => {
-      // Vehicle updated successfully
       console.log('Vehicle description updated');
     });
     this.editMode = false;

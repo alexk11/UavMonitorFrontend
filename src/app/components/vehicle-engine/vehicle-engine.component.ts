@@ -22,6 +22,7 @@ export class VehicleEngineComponent implements OnInit {
 
   first = 0;
   rows = 10;
+  editMode: boolean = false;
 
   minutesTillNearestEngineTO: number = 0; //
   timeTillNearestEngineTO: string = ''; // in format hh, min
@@ -33,7 +34,6 @@ export class VehicleEngineComponent implements OnInit {
       this.getEngineData();
     }
   }
-
 
   private getEngineData(): void {
     this.httpService.getUavEngineInfo(this.uav.uavId).subscribe((data: UavEngine[]) => {
@@ -49,7 +49,6 @@ export class VehicleEngineComponent implements OnInit {
       this.timeTillNearestEngineTO = this.calculateTimeTillTO(data);
     });
   }
-
 
   private calculateTimeTillTO(data: UavEngine[]): string {
     let sum = 0;
@@ -73,19 +72,16 @@ export class VehicleEngineComponent implements OnInit {
     }
   }
 
-
   private toFormattedSpareDuration(minutes: number): string {
     const hh = Math.floor(minutes / 60);
     const mm = minutes % 60;
     return hh + ' ч ' + (mm < 10 ? '0' + mm : mm) + ' мин';
   }
 
-
   private convertToDuration(durationStr: string): number {
     const tokens = durationStr.split(' ');
     return parseInt(tokens[0], 10)*60 + parseInt(tokens[2], 10);
   }
-
 
   private formatDateCustom(input: string): string {
     //input example = "11.10.2015 10:00";
@@ -102,7 +98,6 @@ export class VehicleEngineComponent implements OnInit {
     return `${dd}.${mm}.${yy} ${hh}:${mn}`;
   }
 
-
   private enumerateEngineIntervals(arr: UavEngine[]): void {
     let counter = 0;
     arr
@@ -110,7 +105,6 @@ export class VehicleEngineComponent implements OnInit {
           this.convertStringToDate(a.engineActiveFrom) < this.convertStringToDate(b.engineActiveFrom) ? 1 : -1)
       .forEach(v => v.id = ++counter);
   }
-
 
   applyFilter(event: Event): void {
     this.enumerateEngineIntervals(this.allRecords);
@@ -128,7 +122,6 @@ export class VehicleEngineComponent implements OnInit {
     this.enumerateEngineIntervals(filteredRecords);
     this.displayedRecords = filteredRecords;
   }
-
 
   private containsFilterVal(r: UavEngine, val: string): boolean {
     return r.engineActiveFrom.includes(val) ||
@@ -247,20 +240,5 @@ export class VehicleEngineComponent implements OnInit {
   onReset() {
     this.allRecords = {... this.shallow };
   }
-
-  // getDaysBeforeTO(): string {
-  //   let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
-  //   let lastDigit = Math.abs(this.progressbarInterval % 10);
-  //   if(lastDigit == 1) {
-  //     msg += ' день';
-  //   } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
-  //     msg += ' дней';
-  //   } else if(lastDigit > 1 && lastDigit < 5) {
-  //     msg += ' дня';
-  //   } else {
-  //     msg += ' дней';
-  //   }
-  //   return msg;
-  // }
 
 }

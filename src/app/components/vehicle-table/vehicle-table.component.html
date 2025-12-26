@@ -1,7 +1,7 @@
 <!--theme-toggle /-->
-<div class="header-container">
+<!--div class="header-container"-->
     <h3 class="page-title">Список БВС</h3>
-</div>
+<!--/div-->
 
 <app-info-dialog
         [message]="message"
@@ -136,12 +136,12 @@
                                       (clickOutside)="editMode = false"
                                       (blur)="onDescriptionEdit(vehicle)"
                                       [(ngModel)]="vehicle.description">
-                        </textarea>
+                            </textarea>
                         </ng-template>
                         <ng-template *ngIf="!editMode" #output>
-                        <span class="editable-field" title="Нажмите для редактирования">
-                            {{ vehicle.description }}
-                        </span>
+                            <span class="editable-field" title="Нажмите для редактирования">
+                                {{ vehicle.description }}
+                            </span>
                         </ng-template>
                     </p-cellEditor>
                 </td>

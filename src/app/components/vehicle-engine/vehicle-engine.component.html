@@ -23,7 +23,6 @@
             </div>
         </div>
     </div>
-
     <p-table [value]="displayedRecords"
              dataKey="id"
              editMode="row"
@@ -129,7 +128,12 @@
                 <td>
                     <p-cellEditor>
                         <ng-template #input>
-                            <textarea rows="4" cols="50" [(ngModel)]="item.note" pTextarea></textarea>
+                            <textarea
+                                    rows="4"
+                                    cols="50"
+                                    [(ngModel)]="item.note"
+                                    pTextarea>
+                            </textarea>
                         </ng-template>
                         <ng-template #output>
                             {{item.note}}

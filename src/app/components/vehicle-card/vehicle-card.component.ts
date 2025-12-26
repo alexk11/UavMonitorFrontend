@@ -39,12 +39,13 @@ export class VehicleCardComponent implements OnInit {
   private getVehicleInfo(): void {
     this.httpService.getUavInfo(this.uavId).subscribe(data => {
       if (data === undefined || data === null) {
-        this.uavInfo = { id: 0,
+        this.uavInfo = {
+          id: 0,
           uavId: this.uavId,
           infoList: [],
           slgAddTs: undefined,
-          evalActTs: undefined,
-          insuranceTs: undefined };
+          evalActAddTs: undefined,
+          insuranceAddTs: undefined };
       } else {
         this.uavInfo = data;
       }

@@ -3,7 +3,7 @@ export interface UavInfo {
   uavId: string;
   infoList: string[];
   slgAddTs?: Date ,
-  evalActTs?: Date,
-  insuranceTs?: Date,
+  evalActAddTs?: Date,
+  insuranceAddTs?: Date,
   insuranceExpiryTs?: Date
 }

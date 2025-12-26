@@ -177,6 +177,12 @@ th.p-datatable-sortable-column:hover {
   border-color: var(--primary-red);
 }
 
+::ng-deep button.p-paginator-page:hover {
+  background-color: slategray;
+  border-color: slategray;
+  color: white;
+}
+
 /*::ng-deep .p-paginator .p-select-dropdown .p-select-list .p-select-list-item {*/
 /*  z-index: 1001 !important;*/
 /*  overflow: visible !important;*/

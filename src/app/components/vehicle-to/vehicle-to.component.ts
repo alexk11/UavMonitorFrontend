@@ -16,17 +16,17 @@ export class VehicleToComponent implements OnInit {
 
   @Input() uav!: UavInfo;
 
-  //products!: Product[];
-  //clonedProducts: { [s: string]: Product } = {};
-
   states!: SelectItem[];
 
   allTOs: UavTO[] = [];
-  //displayedTOs: UavTO[] = [];
+  displayedTOs: UavTO[] = [];
   shallow: UavTO[] = []; //{ [s: string]: UavTO } = {};
 
   date!: Date;
-  progressbarInterval: number = 0
+  //progressbarInterval: number = 0
+
+  first = 0;
+  rows = 10;
 
   constructor(private httpService: HttpService) {}
 
@@ -50,34 +50,35 @@ export class VehicleToComponent implements OnInit {
         to.recordId = to.id;
       });
       this.allTOs = data;
+      this.displayedTOs = data;
       data.forEach(val => this.shallow.push(Object.assign({}, val)));
-      this.enumerateTOs();
-      this.getProgressBarInterval();
+      this.enumerateTOs(this.allTOs);
+      //this.getProgressBarInterval();
     });
   }
 
-  private getProgressBarInterval(): void {
-    let now = new Date();
-    let differenceInMs = 0;
-    let differenceInDays: number[] = [];
-    const millisecondsInDay = 1000 * 60 * 60 * 24;
-    this.allTOs.forEach(to => {
-      let toDate = this.convertStringToDate(to.inspectionDate);
-      if (toDate > now) {
-        differenceInMs = Math.abs(toDate.getTime() - now.getTime());
-        differenceInDays.push(Math.floor(differenceInMs / millisecondsInDay));
-      }
-    });
-    if (differenceInDays.length > 0) {
-      this.progressbarInterval = Math.min(...differenceInDays); // nearest TO
-    } else {
-      this.progressbarInterval = - 1; // no info on upcoming TO
-    }
-  }
+  // private getProgressBarInterval(): void {
+  //   let now = new Date();
+  //   let differenceInMs = 0;
+  //   let differenceInDays: number[] = [];
+  //   const millisecondsInDay = 1000 * 60 * 60 * 24;
+  //   this.allTOs.forEach(to => {
+  //     let toDate = this.convertStringToDate(to.inspectionDate);
+  //     if (toDate > now) {
+  //       differenceInMs = Math.abs(toDate.getTime() - now.getTime());
+  //       differenceInDays.push(Math.floor(differenceInMs / millisecondsInDay));
+  //     }
+  //   });
+  //   if (differenceInDays.length > 0) {
+  //     this.progressbarInterval = Math.min(...differenceInDays); // nearest TO
+  //   } else {
+  //     this.progressbarInterval = - 1; // no info on upcoming TO
+  //   }
+  // }
 
-  private enumerateTOs(): void {
+  private enumerateTOs(arr: UavTO[]) {
     let counter = 0;
-    this.allTOs
+    arr
       .sort((a, b) =>
         this.convertStringToDate(a.inspectionDate) < this.convertStringToDate(b.inspectionDate) ? 1 : -1)
       .forEach(v => v.id = ++counter);
@@ -117,7 +118,7 @@ export class VehicleToComponent implements OnInit {
     const shallowTO = this.shallow.find(to => to.recordId === uavTO.recordId);
     if (shallowTO) {
       this.allTOs[index] = shallowTO;
-      this.enumerateTOs()
+      this.enumerateTOs(this.allTOs)
     }
   }
 
@@ -154,7 +155,7 @@ export class VehicleToComponent implements OnInit {
       note: ''
     };
     this.allTOs.unshift(addTO);
-    this.enumerateTOs();
+    this.enumerateTOs(this.allTOs);
     //this.shallow = {...this.allTOs };
     //this.onRowEditSave(addTO);
   }
@@ -163,32 +164,54 @@ export class VehicleToComponent implements OnInit {
     this.allTOs = {... this.shallow };
   }
 
-  getBarColor(): string {
-    if (this.progressbarInterval < 30) {
-      return '#A80000';
-    } else if (this.progressbarInterval > 30 && this.progressbarInterval < 90) {
-      return '#FF7F50';
-    } else if (this.progressbarInterval > 90 && this.progressbarInterval < 180) {
-      return '#F0E68C';
+  // getBarColor(): string {
+  //   if (this.progressbarInterval < 30) {
+  //     return '#A80000';
+  //   } else if (this.progressbarInterval > 30 && this.progressbarInterval < 90) {
+  //     return '#FF7F50';
+  //   } else if (this.progressbarInterval > 90 && this.progressbarInterval < 180) {
+  //     return '#F0E68C';
+  //   }
+  //   return '#7CFC00';
+  // }
+
+  // getDaysBeforeTO(): string {
+  //   let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
+  //   let lastDigit = Math.abs(this.progressbarInterval % 10);
+  //   if(lastDigit == 1) {
+  //     msg += ' день';
+  //   } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
+  //     msg += ' дней';
+  //   } else if(lastDigit > 1 && lastDigit < 5) {
+  //     msg += ' дня';
+  //   } else {
+  //     msg += ' дней';
+  //   }
+  //   return msg;
+  // }
+
+  applyFilter(event: Event): void {
+    this.enumerateTOs(this.allTOs);
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.length == 0) {
+      this.displayedTOs = this.allTOs;
+      return;
     }
-    return '#7CFC00';
+    let filteredRecords: UavTO[] = [];
+    for (let t of this.allTOs) {
+      if (this.containsFilterVal(t, filterValue)) {
+        filteredRecords.push(t as UavTO);
+      }
+    }
+    this.enumerateTOs(filteredRecords);
+    this.displayedTOs = filteredRecords;
   }
 
-  getDaysBeforeTO(): string {
-    let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
-    let lastDigit = Math.abs(this.progressbarInterval % 10);
-    if(lastDigit == 1) {
-      msg += ' день';
-    } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
-      msg += ' дней';
-    } else if(lastDigit > 1 && lastDigit < 5) {
-      msg += ' дня';
-    } else {
-      msg += ' дней';
-    }
-    return msg;
+
+  private containsFilterVal(t: UavTO, val: string): boolean {
+    return t.inspectionDate.includes(val) ||
+        t.status.includes(val) ||
+        t.note.includes(val);
   }
-
-
 
 }

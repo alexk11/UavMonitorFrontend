@@ -1,20 +1,3 @@
-.parent {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    gap: 1rem;
-}
-
-/*!*.engine-to-stripe {*!*/
-/*!*    display: flex;*!*/
-/*!*    align-items: center;*!*/
-/*!*    gap: 2rem;*!*/
-/*!*    padding: 1.0rem 0 0 0;*!*/
-/*!*    background-color: #f8f9fa;*!*/
-/*!*    border-radius: 8px;*!*/
-/*!*    border: none; !*1px solid #dee2e6;*!*!*/
-/*!*}*!*/
-
 .time-left-display {
     float: right;
     flex: 0 0 auto;
@@ -48,14 +31,9 @@
     background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
 }
 
-.tme-left-label {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
 h5.title {
     margin-top: 0.5em;
-    padding-left: 10px;
+    padding-left: 0.5em !important;
     color: var(--text-primary);
     border-left: 3px solid var(--primary-red);
 }
@@ -71,10 +49,21 @@ h5.title {
 /* Стили для поиска и фильтров */
 .search-container {
     display: grid;
-    grid-template-columns: repeat(1, 1fr) fit-content(30%);
+    grid-template-columns: repeat(1, 1fr) fit-content(40%);
     /*justify-content: flex-start;*/
     /*align-items: center;*/
     margin-bottom: 10px;
+}
+
+::ng-deep button.p-paginator-page:hover {
+    background-color: slategray;
+    border-color: slategray;
+    color: white;
+}
+
+.p-inputtext {
+    margin-top: 0.8em;
+    min-width: 300px;
 }
 
 /*::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {*/

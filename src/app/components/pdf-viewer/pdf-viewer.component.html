@@ -1,20 +1,23 @@
+<app-info-dialog
+        [message]="message"
+        [display]="confirmVisible"
+        (confirm)="onConfirm()">
+</app-info-dialog>
+<app-info-dialog
+        [message]="message"
+        [display]="infoVisible"
+        (confirm)="infoVisible = false">
+</app-info-dialog>
 <h4 class="p-3 title">{{title}}</h4>
-<app-info-dialog
-  [message]="message"
-  [display]="confirmVisible"
-  (confirm)="onConfirm()">
-</app-info-dialog>
-<app-info-dialog
-  [message]="message"
-  [display]="infoVisible"
-  (confirm)="infoVisible = false">
-</app-info-dialog>
 <div class="parent">
   <div class="pdf-doc pb-2" *ngIf="pdfUrl && isContent">
     <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
   </div>
   <span *ngIf="!isContent">Нет данных.</span>
   <div class="btn-row">
+    <div *ngIf="isContent" class="text-left mt-2" style="float: left">
+        <span>{{addDateInfo}}</span>
+    </div>
     <div class="text-right mt-2" style="float: right">
       <button class="btn btn-secondary m-1"
               [disabled]="!isContent"

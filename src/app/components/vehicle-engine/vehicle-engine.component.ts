@@ -15,11 +15,10 @@ export class VehicleEngineComponent implements OnInit {
   @Input() uav!: UavInfo;
 
   allRecords: UavEngine[] = [];
-  //displayedRecords: UavEngine[] = [];
-  shallow: UavEngine[] = []; //{ [s: string]: UavEngine } = {};
+  displayedRecords: UavEngine[] = [];
+  shallow: UavEngine[] = [];
 
   date!: Date;
-  progressbarInterval: number = 0
 
   first = 0;
   rows = 10;
@@ -35,21 +34,22 @@ export class VehicleEngineComponent implements OnInit {
     }
   }
 
+
   private getEngineData(): void {
     this.httpService.getUavEngineInfo(this.uav.uavId).subscribe((data: UavEngine[]) => {
       this.allRecords = data;
+      this.displayedRecords = data;
       data.forEach(val => {
         val.engineActiveFrom = this.formatDateCustom(val.engineActiveFrom);
         val.engineActiveTill = this.formatDateCustom(val.engineActiveTill);
         val.reportedTimestamp = this.formatDateCustom(val.reportedTimestamp);
         this.shallow.push(Object.assign({}, val))
       });
-      //data.forEach(val => this.shallow.push(Object.assign({}, val)));
-      this.enumerateTOs();
+      this.enumerateEngineIntervals(this.allRecords);
       this.timeTillNearestEngineTO = this.calculateTimeTillTO(data);
-      //this.getProgressBarInterval();
     });
   }
+
 
   private calculateTimeTillTO(data: UavEngine[]): string {
     let sum = 0;
@@ -73,16 +73,19 @@ export class VehicleEngineComponent implements OnInit {
     }
   }
 
+
   private toFormattedSpareDuration(minutes: number): string {
     const hh = Math.floor(minutes / 60);
     const mm = minutes % 60;
-    return hh + ' ч, ' + (mm < 10 ? '0' + mm : mm) + ' мин';
+    return hh + ' ч ' + (mm < 10 ? '0' + mm : mm) + ' мин';
   }
+
 
   private convertToDuration(durationStr: string): number {
     const tokens = durationStr.split(' ');
     return parseInt(tokens[0], 10)*60 + parseInt(tokens[2], 10);
   }
+
 
   private formatDateCustom(input: string): string {
     //input example = "11.10.2015 10:00";
@@ -91,7 +94,6 @@ export class VehicleEngineComponent implements OnInit {
     let [hh, mn] = timePart.split(":");
 
     yy = String(Number(yy) % 100);
-
     // Pad with leading zeros if single digit
     dd = dd.padStart(2, '0');
     mm = mm.padStart(2, '0');
@@ -100,31 +102,41 @@ export class VehicleEngineComponent implements OnInit {
     return `${dd}.${mm}.${yy} ${hh}:${mn}`;
   }
 
-  // private getProgressBarInterval(): void {
-  //   let now = new Date();
-  //   let differenceInMs = 0;
-  //   let differenceInDays: number[] = [];
-  //   const millisecondsInDay = 1000 * 60 * 60 * 24;
-  //   this.allRecords.forEach(to => {
-  //     let toDate = this.convertStringToDate(to.inspectionDate);
-  //     if (toDate > now) {
-  //       differenceInMs = Math.abs(toDate.getTime() - now.getTime());
-  //       differenceInDays.push(Math.floor(differenceInMs / millisecondsInDay));
-  //     }
-  //   });
-  //   if (differenceInDays.length > 0) {
-  //     this.progressbarInterval = Math.min(...differenceInDays); // nearest TO
-  //   } else {
-  //     this.progressbarInterval = - 1; // no info on upcoming TO
-  //   }
-  // }
 
-  private enumerateTOs(): void {
+  private enumerateEngineIntervals(arr: UavEngine[]): void {
     let counter = 0;
-    this.allRecords
-        .sort((a, b) =>
-            this.convertStringToDate(a.engineActiveFrom) < this.convertStringToDate(b.engineActiveFrom) ? 1 : -1)
-        .forEach(v => v.id = ++counter);
+    arr
+      .sort((a, b) =>
+          this.convertStringToDate(a.engineActiveFrom) < this.convertStringToDate(b.engineActiveFrom) ? 1 : -1)
+      .forEach(v => v.id = ++counter);
+  }
+
+
+  applyFilter(event: Event): void {
+    this.enumerateEngineIntervals(this.allRecords);
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.length == 0) {
+      this.displayedRecords = this.allRecords;
+      return;
+    }
+    let filteredRecords: UavEngine[] = [];
+    for (let r of this.allRecords) {
+      if (this.containsFilterVal(r, filterValue)) {
+        filteredRecords.push(r as UavEngine);
+      }
+    }
+    this.enumerateEngineIntervals(filteredRecords);
+    this.displayedRecords = filteredRecords;
+  }
+
+
+  private containsFilterVal(r: UavEngine, val: string): boolean {
+    return r.engineActiveFrom.includes(val) ||
+        r.engineActiveTill.includes(val) ||
+        r.engineOperateDuration.includes(val) ||
+        r.reporter.includes(val) ||
+        r.reportedTimestamp.includes(val) ||
+        r.note.includes(val);
   }
 
   // private unixTimestampToDate(unixTs: any): string {
@@ -141,10 +153,6 @@ export class VehicleEngineComponent implements OnInit {
         this.getEngineData();
       }
     });
-  }
-
-  private formatDate(date: Date) {
-
   }
 
   private calculateInterval(startDate: string, endDate: string): string {
@@ -188,7 +196,14 @@ export class VehicleEngineComponent implements OnInit {
   }
 
   getTimeLeftText(): string {
-    return 'До ближайшего ТО двигателя:  ' + this.timeTillNearestEngineTO;
+    return this.timeTillNearestEngineTO;
+  }
+
+  engineTOHint(): string {
+    return "Интервал до технического обсуживания двигателя рассчитывается по формуле: \n" +
+        "1-е ТО после 50 часов работы, \n" +
+        "2-е ТО после следующих 50 часов (в сумме 100 часов). \n" +
+        "Последующие ТО проводятся через каждые 100 часов работы двигателя."
   }
 
   onRowEditInit(uavEngine: UavEngine) {
@@ -199,7 +214,7 @@ export class VehicleEngineComponent implements OnInit {
     const shallowEngineInfo = this.shallow.find(to => to.recordId === uavEngine.recordId);
     if (shallowEngineInfo) {
       this.allRecords[index] = shallowEngineInfo;
-      this.enumerateTOs()
+      this.enumerateEngineIntervals(this.allRecords)
     }
   }
 
@@ -209,21 +224,6 @@ export class VehicleEngineComponent implements OnInit {
     this.httpService.deleteUavEngineInfo(uavEngine).subscribe(() => {
       this.getEngineData();
     });
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'ВЫПОЛНЕНО':
-        return 'success';
-      case 'ЗАМЕЧАНИЯ':
-        return 'warn';
-      case 'ОШИБКИ':
-        return 'danger';
-      case 'ЗАПЛАНИРОВАНО':
-      case 'НЕИЗВЕСТНО':
-      default:
-        return 'info';
-    }
   }
 
   onAdd() {
@@ -239,7 +239,7 @@ export class VehicleEngineComponent implements OnInit {
       note: ''
     };
     this.allRecords.unshift(addTO);
-    this.enumerateTOs();
+    this.enumerateEngineIntervals(this.allRecords);
     //this.shallow = {...this.allTOs };
     //this.onRowEditSave(addTO);
   }
@@ -248,47 +248,19 @@ export class VehicleEngineComponent implements OnInit {
     this.allRecords = {... this.shallow };
   }
 
-  getBarColor(): string {
-    if (this.progressbarInterval < 30) {
-      return '#A80000';
-    } else if (this.progressbarInterval > 30 && this.progressbarInterval < 90) {
-      return '#FF7F50';
-    } else if (this.progressbarInterval > 90 && this.progressbarInterval < 180) {
-      return '#F0E68C';
-    }
-    return '#7CFC00';
-  }
-
-  getDaysBeforeTO(): string {
-    let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
-    let lastDigit = Math.abs(this.progressbarInterval % 10);
-    if(lastDigit == 1) {
-      msg += ' день';
-    } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
-      msg += ' дней';
-    } else if(lastDigit > 1 && lastDigit < 5) {
-      msg += ' дня';
-    } else {
-      msg += ' дней';
-    }
-    return msg;
-  }
-
-  applyFilter(event: Event): void {
-    // this.enumerateUsers(this.allUsers);
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // if (filterValue.length == 0) {
-    //   this.displayedUsers = this.allUsers;
-    //   return;
-    // }
-    // let filteredUsers: User[] = [];
-    // for (let u of this.allUsers) {
-    //   if (this.containsFilterVal(u, filterValue)) {
-    //     filteredUsers.push(u as User);
-    //   }
-    // }
-    // this.enumerateUsers(filteredUsers);
-    // this.displayedUsers = filteredUsers;
-  }
+  // getDaysBeforeTO(): string {
+  //   let msg = `Ближайшее ТО через ${this.progressbarInterval}`;
+  //   let lastDigit = Math.abs(this.progressbarInterval % 10);
+  //   if(lastDigit == 1) {
+  //     msg += ' день';
+  //   } else if(this.progressbarInterval > 10 && this.progressbarInterval < 20) {
+  //     msg += ' дней';
+  //   } else if(lastDigit > 1 && lastDigit < 5) {
+  //     msg += ' дня';
+  //   } else {
+  //     msg += ' дней';
+  //   }
+  //   return msg;
+  // }
 
 }

@@ -1,7 +1,7 @@
-<h5 style="text-align: center; color: #A80000; margin-top: 2em">Техническое обслуживание</h5>
+<h5 class="title">Техническое обслуживание</h5>
 <p *ngIf="allTOs.length == 0">Нет данных</p>
 <div *ngIf="allTOs.length > 0" class="card" style="border: none">
-  <div class="parent p-1 mb-2">
+  <!--div class="parent p-1 mb-2">
     <div *ngIf="progressbarInterval > 0" class="pt-3 pb-3">
       <span class="pb-2" style="margin-left: 5.0rem">{{getDaysBeforeTO()}}</span>
       <p-progressBar [value]="progressbarInterval"
@@ -12,20 +12,37 @@
         </ng-template>
       </p-progressBar>
     </div>
-  </div>
-  <p-table [value]="allTOs"
+  </div-->
+<div class="search-container">
+    <p-iconfield iconPosition="left">
+        <p-inputicon>
+            <i class="pi pi-search"></i>
+        </p-inputicon>
+        <input pInputText
+               type="text"
+               (input)="applyFilter($event)"
+               (keyup)="applyFilter($event)"
+               placeholder="Поиск в таблице" />
+    </p-iconfield>
+</div>
+  <p-table [value]="displayedTOs"
            dataKey="id"
            editMode="row"
            showGridlines
            stripedRows
-           [tableStyle]="{'min-width': '50rem'}">
+           [rows]="rows"
+           [first]="first"
+           [paginator]="true"
+           [showCurrentPageReport]="true"
+           [tableStyle]="{ 'min-width': '50rem' }"
+           currentPageReportTemplate="Показаны {first}-{last} из {totalRecords} записей">>
     <ng-template #header>
       <tr>
         <th style="width:5%">№</th>
-        <th style="width:21%; text-align:center">Дата</th>
+        <th style="width:22%; text-align:center">Дата</th>
         <th style="width:15%; text-align:center">Статус</th>
         <th style="width:55%; text-align:center">Примечание</th>
-        <th style="width:4%; padding: 0">
+        <th style="width:3%; padding: 0">
           <a (click)="onAdd()" title="Добавить запись о ТО" onmouseover="" style="cursor: pointer">
             <i class="pi pi-plus-circle" style="padding: 0.4em 0 0 0.8em"></i>
           </a>

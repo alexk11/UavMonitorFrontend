@@ -112,9 +112,9 @@
   background-color: rgba(193, 39, 39, 0.05);
 }
 
-::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {
-  background-color: white;
-}
+/*::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {*/
+/*  background-color: white;*/
+/*}*/
 
 ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
   background-color: #fff8f3;
@@ -191,6 +191,12 @@ th.p-datatable-sortable-column:hover {
   border-color: var(--primary-red);
 }
 
+::ng-deep button.p-paginator-page:hover {
+  background-color: slategray;
+  border-color: slategray;
+  color: white;
+}
+
 /* Стили для пагинатора */
 ::ng-deep .p-paginator {
   background-color: var(--bg-card);
@@ -237,7 +243,6 @@ th.p-datatable-sortable-column:hover {
 /* Стили для подсказки */
 .table-hint {
   display: block;
-  margin-top: 20px;
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-style: italic;

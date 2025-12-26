@@ -62,14 +62,15 @@
 }
 
 .dv button.uav-button {
-  background-color: var(--success-green);
-  color: #fff;
-  border-color: var(--success-green);
+  background-color: #e9ecef;
+  color: #313B4A;
+  border-color: lightgray;
 }
 
 .dv button.uav-button:hover:not(:disabled) {
-  background-color: var(--success-green);
-  border-color: var(--success-green);
+  background-color: #313B4A;
+  border-color: #313B4A;
+  color: white;
   opacity: 0.9;
 }
 

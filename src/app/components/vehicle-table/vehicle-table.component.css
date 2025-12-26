@@ -27,9 +27,12 @@
 }
 
 .actions-container {
+  position: absolute;
+  right: 0;
   display: flex;
   gap: 8px;
   align-items: center;
+  padding-right: 0.3em;
 }
 
 .action-button {
@@ -47,15 +50,31 @@
 }
 
 .add-button {
-  background-color: var(--success-green);
-  color: var(--text-inverse);
+  background-color: #e9ecef;
+  color: #313B4A;
+  border: 1px solid lightgray;
 }
 
 .add-button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: #313B4A;
+  color: #e9ecef;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
 }
+
+/*.dv button.uav-button {*/
+/*  background-color: #e9ecef;*/
+/*  color: #313B4A;*/
+/*  border-color: lightgray;*/
+/*}*/
+
+/*.dv button.uav-button:hover:not(:disabled) {*/
+/*  background-color: #313B4A;*/
+/*  border-color: #313B4A;*/
+/*  color: white;*/
+/*  opacity: 0.9;*/
+/*}*/
+
 
 .delete-button {
   background-color: var(--primary-red);
@@ -78,6 +97,7 @@
 
 /* Стили для поиска и фильтров */
 .search-container {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;

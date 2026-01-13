@@ -1,6 +1,6 @@
 /* Основные стили для таблицы пользователей */
 .card {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-radius: 12px;
   box-shadow: var(--shadow-medium);
   border: 1px solid var(--border-color);
@@ -100,7 +100,8 @@
 }
 
 ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
-  background-color: var(--hover-light);
+  /*background-color: var(--hover-light);*/
+  background-color: lightgray;
 }
 
 /* Zebra Striping - Even/Odd rows */
@@ -125,13 +126,13 @@
 }
 
 /* Dark theme zebra striping */
-body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.15);
-}
+/*body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {*/
+/*  background-color: rgba(193, 39, 39, 0.15);*/
+/*}*/
 
-body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.15);
-}
+/*body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {*/
+/*  background-color: rgba(193, 39, 39, 0.15);*/
+/*}*/
 
 ::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
   border: 1px solid var(--border-color);
@@ -164,11 +165,11 @@ th.p-datatable-sortable-column:hover {
   transition: all 0.3s ease;
 }
 
-.p-inputtext:focus {
-  outline: none;
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
-}
+/*.p-inputtext:focus {*/
+/*  outline: none;*/
+/*  border-color: var(--primary-red);*/
+/*  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);*/
+/*}*/
 
 .p-inputicon {
   left: 12px;

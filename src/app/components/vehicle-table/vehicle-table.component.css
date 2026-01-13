@@ -203,6 +203,11 @@ th.p-datatable-sortable-column:hover {
   color: white;
 }
 
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  /*background-color: var(--hover-light);*/
+  background-color: lightgray !important;
+}
+
 /*::ng-deep .p-paginator .p-select-dropdown .p-select-list .p-select-list-item {*/
 /*  z-index: 1001 !important;*/
 /*  overflow: visible !important;*/

@@ -5,27 +5,26 @@ import {HttpService} from "../../services/http.service";
 import {formatDate} from "@angular/common";
 import {UavFailure} from "../../model/uav-failure";
 import {Router} from "@angular/router";
-import {FailureCommon} from "../../model/failure-common";
 
 
 @Component({
-  selector: 'app-vehicle-failure',
-  templateUrl: './vehicle-failure.component.html',
-  styleUrl: './vehicle-failure.component.css'
+  selector: 'app-failure-common',
+  templateUrl: './failure-common.component.html',
+  styleUrl: './failure-common.component.css'
 })
-export class VehicleFailureComponent implements OnInit {
+export class FailureCommonComponent implements OnInit {
 
-  //@Input() uav!: UavInfo;
+  @Input() uav!: UavInfo;
 
-  allFailures: FailureCommon[] = [];
-  shallow: FailureCommon[] = [];
-  displayedFailures: FailureCommon[] = [];
+  allFailures: UavFailure[] = [];
+  shallow: UavFailure[] = [];
+  displayedFailures: UavFailure[] = [];
 
   severities!: SelectItem[];
 
   dialogVisible = false;
   message!: string;
-  failureToDelete!: FailureCommon;
+  failureToDelete!: UavFailure;
 
   constructor(private httpService: HttpService, private router: Router) {}
 
@@ -36,15 +35,15 @@ export class VehicleFailureComponent implements OnInit {
       { label: 'Замечание', value: 'ЗАМЕЧАНИЕ' },
       { label: 'Информация', value: 'ИНФОРМАЦИЯ' }
     ];
-    //if (this.uav !== null) {
-      this.getCommonFailures();
-    //}
+    if (this.uav !== null) {
+      this.getFailures();
+    }
   }
 
-  private getCommonFailures(): void {
-    this.httpService.getFailuresCommon().subscribe((data: FailureCommon[]) => {
+  private getFailures(): void {
+    this.httpService.getUavFailures(this.uav.uavId).subscribe((data: UavFailure[]) => {
       data.forEach(f => {
-        //f.date = this.unixTimestampToDate(f.date);
+        f.date = this.unixTimestampToDate(f.date);
         f.recordId = f.id;
       });
       this.allFailures = data;
@@ -54,59 +53,58 @@ export class VehicleFailureComponent implements OnInit {
     });
   }
 
-  private enumerateData(arr: FailureCommon[]): void {
+  private enumerateData(arr: UavFailure[]): void {
     let counter = 0;
     arr.sort((a, b) =>
-         this.convertStringToDate(a.failureType) < this.convertStringToDate(b.failureType) ? 1 : -1)
-       .forEach(v => v.id = ++counter);
+        this.convertStringToDate(a.date) < this.convertStringToDate(b.date) ? 1 : -1)
+        .forEach(v => v.id = ++counter);
   }
 
   private unixTimestampToDate(unixTs: any): string {
     return formatDate(new Date(unixTs), 'dd.MM.yyyy', 'en-US');
   }
 
-  // onFailureRowDoubleClick(rowData: any) {
-  //   console.log(rowData);
-  //   const id = rowData.id;
-  //   if (id !== undefined) {
-  //     this.router.navigate(['uav-failure-steps'],
-  //       { skipLocationChange: true, state: {uavId: this.uav.uavId, failureData: rowData} }).then(() => "Ok");
-  //   }
-  // }
+  onFailureRowDoubleClick(rowData: any) {
+    console.log(rowData);
+    const id = rowData.id;
+    if (id !== undefined) {
+      this.router.navigate(['uav-failure-steps'],
+          { skipLocationChange: true, state: {uavId: this.uav.uavId, failureData: rowData} }).then(() => "Ok");
+    }
+  }
 
   onRowEditInit(uavFailure: UavFailure) {
     //this.clonedFailures[uavFailure.id as number] = { ...uavFailure };
   }
 
-  onRowEditSave(failureCommon: FailureCommon) {
-    //failureCommon.uavId = this.uav.uavId;
-    failureCommon.failureDate = this.convertDateString(failureCommon.failureDate);
-    failureCommon.reportedTs = this.convertDateString(failureCommon.reportedTs);
-    this.httpService.saveFailureCommon(failureCommon).subscribe((data: FailureCommon) => {
+  onRowEditSave(uavFailure: UavFailure) {
+    uavFailure.uavId = this.uav.uavId;
+    uavFailure.date = this.convertDateString(uavFailure.date);
+    this.httpService.saveUavFailure(uavFailure).subscribe((data: UavFailure) => {
       if (data !== null) {
-        this.getCommonFailures();
+        this.getFailures();
       }
     });
   }
 
-  onRowEditCancel(failureCommon: FailureCommon, index: number) {
-    const shallowFailure = this.shallow.find(f => f.recordId === failureCommon.recordId);
+  onRowEditCancel(uavFailure: UavFailure, index: number) {
+    const shallowFailure = this.shallow.find(f => f.recordId === uavFailure.recordId);
     if (shallowFailure) {
       this.allFailures[index] = shallowFailure;
       this.enumerateData(this.allFailures);
     }
   }
 
-  onRowEditRemove(failureCommon: FailureCommon) {
-    this.failureToDelete = failureCommon;
+  onRowEditRemove(uavFailure: UavFailure) {
+    this.failureToDelete = uavFailure;
     this.message = "Действительно удалить?";
     this.dialogVisible = true;
   }
 
   onConfirm() {
     this.dialogVisible = false;
-    this.httpService.deleteFailureCommon(this.failureToDelete).subscribe(() => {
-      this.getCommonFailures();
+    this.httpService.deleteUavFailure(this.failureToDelete).subscribe(() => {
+      this.getFailures();
     });
   }
 
@@ -135,17 +133,15 @@ export class VehicleFailureComponent implements OnInit {
   }
 
   onAdd() {
-    let addCommonFailure: FailureCommon = {
+    let addFailure: UavFailure = {
       id: -1, // will be assigned by DB
       recordId: -1,
-      failureType: '',
-      uavId: '',
-      failureDate: '',
-      reporter: '',
-      reportedTs: '',
+      uavId: this.uav.uavId,
+      date: '',
+      severity: 'ИНФОРМАЦИЯ',
       description: ''
     };
-    this.allFailures.unshift(addCommonFailure);
+    this.allFailures.unshift(addFailure);
     this.enumerateData(this.allFailures);
   }
 
@@ -168,23 +164,19 @@ export class VehicleFailureComponent implements OnInit {
       this.displayedFailures = this.allFailures;
       return;
     }
-    let filteredFailures: FailureCommon[] = [];
+    let filteredFailures: UavFailure[] = [];
     for (let f of this.allFailures) {
       if (this.containsFilterVal(f, filterValue)) {
-        filteredFailures.push(f as FailureCommon);
+        filteredFailures.push(f as UavFailure);
       }
     }
     this.enumerateData(filteredFailures);
     this.displayedFailures = filteredFailures;
   }
 
-  private containsFilterVal(f: FailureCommon, val: string): boolean {
-    return f.failureType.includes(val) ||
-        f.uavId.includes(val) ||
-        f.failureDate.includes(val) ||
-        f.reporter.includes(val) ||
-        f.reportedTs.includes(val) ||
-        f.description.includes(val);
+  private containsFilterVal(f: UavFailure, val: string): boolean {
+    return f.date.includes(val) || f.severity.includes(val) || f.description.includes(val);
   }
 
 }
+

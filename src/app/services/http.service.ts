@@ -17,6 +17,7 @@ import {Router} from "@angular/router";
 import {UavInsuranceData} from "../model/uav-insurance-data";
 import {formatDate} from "@angular/common";
 import {UavEngine} from "../model/uav-engine";
+import {FailureCommon} from "../model/failure-common";
 
 
 @Injectable({ providedIn: 'root' })
@@ -78,6 +79,16 @@ export class HttpService {
       );
   }
 
+  /** GET vehicles unique registration number */
+  getRegNumbers(): Observable<String[]> {
+    this.errorMessage = '';
+    return this.http.get<String[]>(`${this.backUrl}/getUavRegNumbers`, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.log('Fetched registration numbers')),
+            catchError(this.handleError<String[]>('getRegNumbers', []))
+        );
+  }
+
   /** POST: create new uav on the server */
   addVehicle(vehicle: Vehicle): Observable<any> {
     this.errorMessage = '';
@@ -107,6 +118,8 @@ export class HttpService {
         catchError(this.handleError<any>('updateVehicle'))
       );
   }
+
+
 
 // Users table methods
   /** GET users from the server */
@@ -293,17 +306,17 @@ export class HttpService {
   //// Engine resource
   getUavEngineInfo(uavId: string): Observable<UavEngine[]> {
     this.errorMessage = '';
-    const url = `${this.backUrl}/getUavTOInfo/${uavId}`;
+    const url = `${this.backUrl}/getUavEngineInfo/${uavId}`;
     return this.http.get<UavEngine[]>(url, { headers: this.getAuthHeader() })
         .pipe(
-            tap(_ => this.messageService.add(`Got TO data from DB for='${uavId}'`)),
+            tap(_ => this.messageService.add(`Got engine data from DB for='${uavId}'`)),
             catchError(this.handleError<UavEngine[]>(`getUavEngineInfo id=${uavId}`))
         );
   }
 
   saveUavEngineInfo(data: UavEngine): Observable<UavEngine> {
     this.errorMessage = '';
-    const url = `${this.backUrl}/saveUavTOInfo`;
+    const url = `${this.backUrl}/saveUavEngineInfo`;
     return this.http.post<UavEngine>(url, data, { headers: this.getAuthHeader() })
         .pipe(
             tap(_ => this.messageService.add(`Posted UavEngine info`)),
@@ -314,7 +327,7 @@ export class HttpService {
   /** DELETE: delete UavEngine info on the server */
   deleteUavEngineInfo(data: UavEngine): Observable<any> {
     this.errorMessage = '';
-    return this.http.request('DELETE', `${this.backUrl}/deleteUavTOInfo`, { headers: this.getAuthHeader(), body: data })
+    return this.http.request('DELETE', `${this.backUrl}/deleteUavEngineInfo`, { headers: this.getAuthHeader(), body: data })
         .pipe(
             tap(_ => this.messageService.add("UavEngineInfo deleted.")),
             catchError(this.handleError<UavEngine>('deleteUavEngineInfo'))
@@ -365,7 +378,7 @@ export class HttpService {
       );
   }
 
-// Failure methods
+// Single UAV failure methods
   getUavFailures(uavId: string): Observable<UavFailure[]> {
     this.errorMessage = '';
     const url = `${this.backUrl}/fetchUavFailures/${uavId}`;
@@ -396,6 +409,38 @@ export class HttpService {
         tap(_ => this.messageService.add("UavFailure deleted.")),
         catchError(this.handleError<UavFailure>('deleteUavFailure'))
       );
+  }
+
+// Common failures methods
+  getFailuresCommon(): Observable<FailureCommon[]> {
+    this.errorMessage = '';
+    const url = `${this.backUrl}/fetchFailuresCommon`;
+    return this.http.get<FailureCommon[]>(url, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.messageService.add(`Got common failures data from DB`)),
+            catchError(this.handleError<FailureCommon[]>(`getCommonFailures`))
+        );
+  }
+
+  saveFailureCommon(data: FailureCommon): Observable<FailureCommon> {
+    this.errorMessage = '';
+    const url = `${this.backUrl}/saveFailureCommon`;
+    return this.http.post<FailureCommon>(url, data, { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.messageService.add(`Posted FailureCommon`)),
+            catchError(this.handleError<FailureCommon>(`saveFailureCommon`))
+        );
+  }
+
+  deleteFailureCommon(failureCommon: FailureCommon): Observable<any> {
+    this.errorMessage = '';
+    return this.http.request('DELETE',
+        `${this.backUrl}/deleteFailureCommon/${failureCommon.recordId}`,
+        { headers: this.getAuthHeader() })
+        .pipe(
+            tap(_ => this.messageService.add("FailureCommon deleted.")),
+            catchError(this.handleError<FailureCommon>('deleteFailureCommon'))
+        );
   }
 
 // Logs button table

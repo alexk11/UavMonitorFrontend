@@ -1,6 +1,6 @@
-/* Основные стили для таблицы пользователей */
+/* Основные стили для таблицы БВС */
 .card {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   border-radius: 12px;
   box-shadow: var(--shadow-medium);
   border: 1px solid var(--border-color);
@@ -20,16 +20,19 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0;
+  margin-bottom: 10px;
   text-align: left;
   padding-left: 10px;
   border-left: 4px solid var(--primary-red);
 }
 
 .actions-container {
+  position: absolute;
+  right: 0;
   display: flex;
   gap: 8px;
   align-items: center;
+  padding-right: 0.3em;
 }
 
 .action-button {
@@ -47,15 +50,31 @@
 }
 
 .add-button {
-  background-color: var(--success-green);
-  color: var(--text-inverse);
+  background-color: #e9ecef;
+  color: #313B4A;
+  border: 1px solid lightgray;
 }
 
 .add-button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: #313B4A;
+  color: #e9ecef;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
 }
+
+/*.dv button.uav-button {*/
+/*  background-color: #e9ecef;*/
+/*  color: #313B4A;*/
+/*  border-color: lightgray;*/
+/*}*/
+
+/*.dv button.uav-button:hover:not(:disabled) {*/
+/*  background-color: #313B4A;*/
+/*  border-color: #313B4A;*/
+/*  color: white;*/
+/*  opacity: 0.9;*/
+/*}*/
+
 
 .delete-button {
   background-color: var(--primary-red);
@@ -76,79 +95,46 @@
   box-shadow: none;
 }
 
-/* Стили для PrimeNG таблицы */
-::ng-deep .p-datatable {
-  border-radius: 10px;
-  overflow: hidden;
+/* Стили для поиска и фильтров */
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  background-color: var(--secondary-dark);
-  color: var(--text-inverse);
-  font-weight: 600;
-  padding: 16px;
-  border: none;
-  border-bottom: 2px solid var(--primary-dark);
+::ng-deep .type-dropdown {
+  width: 200px;
 }
 
-::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-primary);
-  transition: background-color 0.2s ease;
-  background-color: var(--bg-card);
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
-  /*background-color: var(--hover-light);*/
-  background-color: lightgray;
-}
-
-/* Zebra Striping - Even/Odd rows */
-::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(even) {
-  background-color: rgba(193, 39, 39, 0.05);
-}
-
-::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(odd) {
-  background-color: rgba(193, 39, 39, 0.05);
-}
-
-/*::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even):hover {*/
-/*  background-color: white;*/
-/*}*/
-
-::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background-color: #fff8f3;
-}
-
-::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
-  background-color: white;
-}
-
-/* Dark theme zebra striping */
-/*body.dark-theme ::ng-deep .p-datatable .p-datatable-tbody > tr:nth-child(even) {*/
-/*  background-color: rgba(193, 39, 39, 0.15);*/
-/*}*/
-
-/*body.dark-theme ::ng-deep .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {*/
-/*  background-color: rgba(193, 39, 39, 0.15);*/
-/*}*/
-
-::ng-deep .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+::ng-deep .type-dropdown .p-dropdown {
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
-th.p-datatable-sortable-column:hover {
-  color: antiquewhite;
-  background-color: var(--secondary-dark) !important;
-}
+/*::ng-deep .type-dropdown .p-dropdown:not(.p-disabled):hover {*/
+/*  border-color: var(--primary-red);*/
+/*}*/
 
-/* Стили для поиска в caption */
-::ng-deep .p-datatable .p-datatable-caption {
-  background-color: var(--bg-card);
-  border-bottom: 1px solid var(--border-color);
-  padding: 15px;
-}
+/*::ng-deep .type-dropdown .p-dropdown:not(.p-disabled).p-focus {*/
+/*  outline: none;*/
+/*  border-color: var(--primary-red);*/
+/*  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);*/
+/*}*/
+
+/*::ng-deep .type-dropdown .p-dropdown-label {*/
+/*  color: var(--text-primary);*/
+/*  padding: 10px 15px;*/
+/*}*/
+
+/*::ng-deep .type-dropdown .p-dropdown-trigger {*/
+/*  color: var(--text-secondary);*/
+/*}*/
 
 .p-iconfield {
   width: 300px;
@@ -165,18 +151,37 @@ th.p-datatable-sortable-column:hover {
   transition: all 0.3s ease;
 }
 
-/*.p-inputtext:focus {*/
-/*  outline: none;*/
-/*  border-color: var(--primary-red);*/
-/*  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);*/
-/*}*/
+.p-inputtext:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(193, 39, 39, 0.1);
+}
 
 .p-inputicon {
   left: 12px;
   color: var(--text-secondary);
 }
 
-/* Стили для чекбоксов */
+/* Стили для PrimeNG таблицы */
+::ng-deep .p-datatable {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--secondary-dark);
+  color: var(--text-inverse);
+  font-weight: 600;
+  padding: 16px;
+  border: none;
+  border-bottom: 2px solid var(--primary-dark);
+}
+
+th.p-datatable-sortable-column:hover {
+  color: antiquewhite;
+  background-color: var(--secondary-dark) !important;
+}
+
 ::ng-deep .p-checkbox .p-checkbox-box {
   border-radius: 4px;
   border: 1px solid var(--border-color);
@@ -198,57 +203,84 @@ th.p-datatable-sortable-column:hover {
   color: white;
 }
 
-/* Стили для пагинатора */
-::ng-deep .p-paginator {
-  background-color: var(--bg-card);
-  border: none;
-  border-top: 1px solid var(--border-color);
-  padding: 15px;
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  /*background-color: var(--hover-light);*/
+  background-color: lightgray !important;
 }
 
-::ng-deep .p-paginator .p-paginator-element {
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  margin: 0 2px;
-  color: var(--text-primary);
-  background-color: var(--bg-secondary);
+/*::ng-deep .p-paginator .p-select-dropdown .p-select-list .p-select-list-item {*/
+/*  z-index: 1001 !important;*/
+/*  overflow: visible !important;*/
+/*}*/
+
+/*::ng-deep .p-paginator {*/
+/*  overflow: visible;*/
+/*}*/
+
+/*!*::ng-deep .p-paginator {*!*/
+/*!*  background-color: var(--bg-card);*!*/
+/*!*  border: none;*!*/
+/*!*  border-top: 1px solid var(--border-color);*!*/
+/*!*  padding: 15px;*!*/
+/*!*}*!*/
+
+/*!*::ng-deep .p-paginator .p-paginator-element {*!*/
+/*!*  border-radius: 6px;*!*/
+/*!*  border: 1px solid var(--border-color);*!*/
+/*!*  margin: 0 2px;*!*/
+/*!*  color: var(--text-primary);*!*/
+/*!*  background-color: var(--bg-secondary);*!*/
+/*!*}*!*/
+
+/*!*::ng-deep .p-paginator .p-paginator-element:hover {*!*/
+/*!*  background-color: var(--hover-light);*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*  color: var(--primary-red);*!*/
+/*!*}*!*/
+
+/*!*::ng-deep .p-paginator .p-paginator-element.p-highlight {*!*/
+/*!*  background-color: var(--primary-red);*!*/
+/*!*  color: var(--text-inverse);*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*}*!*/
+
+/* Стили для редактируемого поля */
+.editable-field {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
-::ng-deep .p-paginator .p-paginator-element:hover {
-  background-color: var(--hover-light);
-  border-color: var(--primary-red);
-  color: var(--primary-red);
+.editable-field:hover {
+  background-color: lightgray; /*rgba(193, 39, 39, 0.1);*/
 }
 
-::ng-deep .p-paginator .p-paginator-element.p-highlight {
-  background-color: var(--primary-red);
-  color: var(--text-inverse);
-  border-color: var(--primary-red);
-}
+/*!*.editable-input {*!*/
+/*!*  width: 100%;*!*/
+/*!*  padding: 6px 10px;*!*/
+/*!*  border: 1px solid var(--primary-red);*!*/
+/*!*  border-radius: 4px;*!*/
+/*!*  background-color: var(--bg-secondary);*!*/
+/*!*  color: var(--text-primary);*!*/
+/*!*}*!*/
 
-/* Стили для иконок статуса */
-.red {
-  color: var(--primary-red);
-  transition: transform 0.2s ease;
-}
+/*!*.editable-input:focus {*!*/
+/*!*  outline: none;*!*/
+/*!*  border-color: var(--primary-red);*!*/
+/*!*  box-shadow: 0 0 0 2px rgba(193, 39, 39, 0.2);*!*/
+/*!*}*!*/
 
-.green {
-  color: var(--success-green);
-  transition: transform 0.2s ease;
-}
-
-.red:hover, .green:hover {
-  transform: scale(1.1);
-}
-
-/* Стили для подсказки */
+/* Стили для двойного клика */
 .table-hint {
   display: block;
   color: var(--text-secondary);
   font-size: 0.9rem;
   font-style: italic;
   text-align: center;
-  padding: 10px;
+  padding: 0;
   background-color: var(--hover-light);
   border-radius: 6px;
   border-left: 4px solid var(--primary-red);
@@ -275,6 +307,16 @@ th.p-datatable-sortable-column:hover {
     flex-wrap: wrap;
   }
 
+  .search-container {
+    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  ::ng-deep .type-dropdown {
+    width: 100%;
+  }
+
   .p-iconfield {
     width: 100%;
     max-width: 300px;
@@ -285,4 +327,31 @@ th.p-datatable-sortable-column:hover {
     padding: 10px 8px;
     font-size: 0.9rem;
   }
+}
+
+/* Стили для dropdown панели */
+::ng-deep .p-dropdown-panel {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-medium);
+}
+
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: var(--text-primary);
+  padding: 10px 15px;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-disabled):hover {
+  background-color: var(--hover-light);
+}
+
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background-color: var(--primary-red);
+  color: var(--text-inverse);
+}
+
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus {
+  background-color: var(--hover-light);
 }

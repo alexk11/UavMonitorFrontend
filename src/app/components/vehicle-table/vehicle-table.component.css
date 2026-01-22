@@ -30,7 +30,7 @@
   position: absolute;
   right: 0;
   display: flex;
-  gap: 8px;
+  gap: 5px;
   align-items: center;
   padding-right: 0.3em;
 }

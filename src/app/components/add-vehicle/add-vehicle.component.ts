@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpService} from "../../services/http.service";
 import {Router} from "@angular/router";
 import {Vehicle} from "../../model/vehicle";
+import {UavTO} from "../../model/uav-to";
 
 
 interface UavType {
@@ -55,21 +56,28 @@ export class AddVehicleComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.uavCreateForm.invalid) {
-      return;
-    }
-    const vehicle: Vehicle = this.createVehicle();
-    this.httpService.addVehicle(vehicle)
-      .subscribe({
-        next: () => {
-          this.message = `БВС '${vehicle.vehicleId}' добавлен`;
-          if (this.httpService.errorMessage !== '') {
-            this.message = this.httpService.errorMessage;
-          }
-        },
-        error: (error: string) => this.message = error,
-        complete: () => this.dialogVisible = true
-      });
+    this.httpService.getRegNumbers().subscribe((data: String[]) => {
+      if (data.includes(this.f.vehicleId.value)) {
+        this.message = 'БВС с номером "' + this.f.vehicleId.value + '" уже определен!';
+        this.dialogVisible = true;
+        return;
+      }
+      if (this.uavCreateForm.invalid) {
+        return;
+      }
+      const vehicle: Vehicle = this.createVehicle();
+      this.httpService.addVehicle(vehicle)
+          .subscribe({
+            next: () => {
+              this.message = `БВС '${vehicle.vehicleId}' добавлен`;
+              if (this.httpService.errorMessage !== '') {
+                this.message = this.httpService.errorMessage;
+              }
+            },
+            error: (error: string) => this.message = error,
+            complete: () => this.dialogVisible = true
+          });
+    });
   }
 
   onReset() {
@@ -79,7 +87,7 @@ export class AddVehicleComponent implements OnInit {
 
   onConfirm() {
     this.dialogVisible = false;
-    this.router.navigate(['uav-table'], {skipLocationChange: true}).then(() => "Ok");
+    //this.router.navigate(['uav-table'], {skipLocationChange: true}).then(() => "Ok");
   }
 
   onBack() {

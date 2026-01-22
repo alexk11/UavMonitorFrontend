@@ -38,6 +38,7 @@ import {VehicleFailureComponent} from "./components/vehicle-failure/vehicle-fail
 import {FailureHistoryComponent} from "./components/failure-history/failure-history.component";
 import {VehicleInsuranceComponent} from "./components/vehicle-insurance/vehicle-insurance.component";
 import {ClickOutsideDirective} from "./directives/click-outside";
+import {FailureCommonComponent} from "./components/failure-common/failure-common.component";
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import {ClickOutsideDirective} from "./directives/click-outside";
     VehicleToComponent,
     VehicleEngineComponent,
     VehicleFailureComponent,
+    FailureCommonComponent,
     VehicleInsuranceComponent,
     FailureHistoryComponent,
     InfoDialogComponent,

@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
-import { HttpService } from './http.service';
-import { MessageService } from './message.service';
-import { AppConfigService } from './config.service';
-import { User } from '../model/user';
-import { Vehicle } from '../model/vehicle';
-import { UavInfo } from '../model/uav-info';
-import { UavTO } from '../model/uav-to';
-import { UavFailure } from '../model/uav-failure';
-import { UavFailureStep } from '../model/uav-failure-step';
-import { Activity } from '../model/activity';
+import { HttpService } from '../http.service';
+import { MessageService } from '../message.service';
+import { AppConfigService } from '../config.service';
+import { User } from '../../model/user';
+import { Vehicle } from '../../model/vehicle';
+import { UavInfo } from '../../model/uav-info';
+import { UavTO } from '../../model/uav-to';
+import { UavFailure } from '../../model/uav-failure';
+import { UavFailureStep } from '../../model/uav-failure-step';
+import { Activity } from '../../model/activity';
 
 describe('HttpService', () => {
   let service: HttpService;

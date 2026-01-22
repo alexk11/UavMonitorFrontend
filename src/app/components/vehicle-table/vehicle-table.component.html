@@ -1,12 +1,8 @@
-<!--theme-toggle /-->
-<!--div class="header-container"-->
-    <h3 class="page-title">Список БВС</h3>
-<!--/div-->
-
+<h3 class="page-title">Список БВС</h3>
 <app-info-dialog
         [message]="message"
         [display]="dialogVisible"
-        (confirm)="dialogVisible=false">
+        (confirm)="onConfirm()">
 </app-info-dialog>
 
 <div class="search-container">
@@ -52,8 +48,11 @@
             showGridlines
             stripedRows
             [paginator]="true"
-            [rows]="rows"
+            [rows]="5"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            paginatorDropdownAppendTo="body"
             [first]="first"
+            selectionMode="multiple"
             [(selection)]="selectedVehicles"
             [showCurrentPageReport]="true"
             [tableStyle]="{ 'min-width': '50rem' }"

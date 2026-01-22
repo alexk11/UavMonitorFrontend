@@ -166,7 +166,7 @@ export class FailureHistoryComponent implements OnInit {
 
   onBack() {
     //this.location.back();
-    this.router.navigate(['uav-card', this.uavId, '6'], { skipLocationChange: true }).then(() => "Ok");
+    this.router.navigate(['uav-card', this.uavId, '7'], { skipLocationChange: true }).then(() => "Ok");
   }
 
   // onSave(uavFailure: UavFailure) {

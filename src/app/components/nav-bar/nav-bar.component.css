@@ -1,9 +1,9 @@
 .layout {
   width: 100%;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   border-bottom: 2px solid var(--border-color);
-  padding: 10px 0;
+  padding: 5px 0;
   margin-bottom: 15px;
   align-items: center;
   flex-wrap: wrap;
@@ -117,7 +117,7 @@
   .layout {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 5px;
   }
 
   .marginLeft {

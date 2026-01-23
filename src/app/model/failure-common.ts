@@ -4,7 +4,7 @@ export interface FailureCommon {
     failureType: string;
     uavId: string;
     failureDate: string;
-    reporter: string;
+    contactPerson: string;
     reportedTs: string;
     description: string;
 }

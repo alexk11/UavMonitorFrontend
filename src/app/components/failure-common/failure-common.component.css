@@ -1,0 +1,27 @@
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    text-align: left;
+    padding-left: 10px;
+    border-left: 4px solid var(--primary-red);
+}
+
+/* Стили для двойного клика */
+.table-hint {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
+    padding: 0;
+    background-color: var(--hover-light);
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-red);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+    /*background-color: var(--hover-light);*/
+    background-color: lightgray !important;
+}

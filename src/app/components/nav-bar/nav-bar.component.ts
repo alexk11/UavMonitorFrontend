@@ -63,4 +63,8 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['users'], { skipLocationChange: true }).then(() => "Ok");
   }
 
+  navigateToCommonFailures(): void {
+    this.router.navigate(['common-failures'], { skipLocationChange: true }).then(() => "Ok");
+  }
+
 }

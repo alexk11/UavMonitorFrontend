@@ -4,6 +4,7 @@ import {User} from "../../model/user";
 import {MessageService} from "../../services/message.service";
 import {HttpService} from "../../services/http.service";
 import {Router} from "@angular/router";
+import {Vehicle} from "../../model/vehicle";
 
 interface Role {
   name: string,
@@ -56,21 +57,30 @@ export class AddUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
-    const user: User = this.createUser();
-    this.httpService.addUser(user)
-      .subscribe({
-        next: () => {
-          this.message = `Пользователь '${user.login}' создан`;
-          if (this.httpService.errorMessage !== '') {
-            this.message = this.httpService.errorMessage;
-          }
-        },
-        error: error => this.message = error,
-        complete: () => this.dialogVisible = true
+    this.httpService.getUsers().subscribe((data: User[]) => {
+      data.forEach(u => {
+        if (u.login.includes(this.f.login.value)) {
+          this.message = 'Пользователь "' + this.f.login.value + '" уже существует!';
+          this.dialogVisible = true;
+          return;
+        }
       });
+      if (this.registerForm.invalid) {
+        return;
+      }
+      const user: User = this.createUser();
+      this.httpService.addUser(user)
+          .subscribe({
+            next: () => {
+              this.message = `Пользователь '${user.login}' добавлен`;
+              if (this.httpService.errorMessage !== '') {
+                this.message = this.httpService.errorMessage;
+              }
+            },
+            error: (error: string) => this.message = error,
+            complete: () => this.dialogVisible = true
+          });
+    });
   }
 
   onReset() {
@@ -80,7 +90,7 @@ export class AddUserComponent implements OnInit {
 
   onConfirm() {
     this.dialogVisible = false;
-    this.router.navigate(['users'], {skipLocationChange: true}).then(() => "Ok");
+    //this.router.navigate(['users'], {skipLocationChange: true}).then(() => "Ok");
   }
 
   onBack() {

@@ -8,6 +8,7 @@ import {AddUserComponent} from "../components/add-user/add-user.component";
 import {AddVehicleComponent} from "../components/add-vehicle/add-vehicle.component";
 import {FailureHistoryComponent} from "../components/failure-history/failure-history.component";
 import {ContentComponent} from "../components/content/content.component";
+import {FailureCommonComponent} from "../components/failure-common/failure-common.component";
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'uav-table', component: VehicleTableComponent },
   { path: 'uav-card/:id/:tab', component: VehicleCardComponent },
   { path: 'uav-add', component: AddVehicleComponent },
+  { path: 'common-failures', component: FailureCommonComponent },
   { path: 'uav-failure-steps', component: FailureHistoryComponent },
   { path: 'users', component: UserListComponent },
   { path: 'user-add', component: AddUserComponent },
